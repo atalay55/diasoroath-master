@@ -102,60 +102,68 @@ class _CameraPageState extends State<CameraPage> {
     }
     if (cameraController!.value.isInitialized) {
       return Scaffold(
-        body: Stack(
-          children: [
-            Center(
-              child: SizedBox(
-                width: width,
-                height: height,
-                child: CameraPreview(cameraController!),
+        body: GestureDetector(
+          onDoubleTap: (){
+            setState(() {
+              direction = direction == 0 ? 1 : 0;
+              startCamera(direction);
+            });
+          },
+          child: Stack(
+            children: [
+              Center(
+                child: SizedBox(
+                  width: width,
+                  height: height,
+                  child: CameraPreview(cameraController!),
+                ),
               ),
-            ),
-            visible
-                ? Center(
-              child: Image.asset(
-                'images/mt2.png',
-                width: width / 3,
-                height: height / 3,
-              ),
-            )
-                : SizedBox(),
-        
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding:  EdgeInsets.only(left:width/20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            visible = !visible;
-                          });
-                        },
-                        child: button(Icons.add_photo_alternate_outlined,  width),
-                      ),
-                      Padding(
-                        padding:  EdgeInsets.only(left: width/15),
-                        child: GestureDetector(
-                          onTap: capturePhoto,
-                          child: button(Icons.camera_alt_outlined,   width),
+              visible
+                  ? Center(
+                child: Image.asset(
+                  'images/mt2.png',
+                  width: width / 3,
+                  height: height / 3,
+                ),
+              )
+                  : SizedBox(),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding:  EdgeInsets.only(left:width/20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              visible = !visible;
+                            });
+                          },
+                          child: button(Icons.add_photo_alternate_outlined,  width),
                         ),
-                      ),
+                        Padding(
+                          padding:  EdgeInsets.only(left: width/15),
+                          child: GestureDetector(
+                            onTap: capturePhoto,
+                            child: button(Icons.camera_alt_outlined,   width),
+                          ),
+                        ),
 
 
-                    ],
-                  ),
-                )
-              ],
-            ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
 
 
-          ],
+            ],
+          ),
         ),floatingActionButton: Padding(
           padding:  EdgeInsets.only(right: width/20.0,bottom: width/55),
           child: SpeedDial(

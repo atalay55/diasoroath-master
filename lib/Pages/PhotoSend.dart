@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gokhan/Pages/HomePage.dart';
 import 'package:gokhan/Pages/LoginPage.dart';
+import 'package:gokhan/Pages/RegisterPage.dart';
+import 'package:gokhan/Pages/Tabs/ReportPage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -131,16 +133,23 @@ class PhotoSend extends StatelessWidget {
                                      );
                                      Timer(Duration(seconds:2), () {
                                        Navigator.of(context).pop();// Close
+
                                      });
 
 
-                                  }) ,
+
+                                  }
+
+                                  ) ,
+
                                 )
 
                             );
 
+
                           },
                         );
+                     Timer(Duration(seconds:3), () {  Navigator.pop(context);});
 
 
                       },
