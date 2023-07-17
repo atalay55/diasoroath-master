@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "864030294745",
+    "project_id": "appdatabase-1fc53",
+    "storage_bucket": "appdatabase-1fc53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864030294745:android:92416a6847f496546334c8",
+        "android_client_info": {
+          "package_name": "com.example.gokhan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "864030294745-q7581sho4m3hqsomdg5olfqhds7r76l9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8l2zwyoJJ8CwZAH7v1ilk_Vl9SNh1ayA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "864030294745-q7581sho4m3hqsomdg5olfqhds7r76l9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
