@@ -32,6 +32,15 @@ class _LoginPageState extends State<LoginPage> {
     Colors.blueGrey,
     Colors.lightBlueAccent,
     Colors.lightGreenAccent,
+    Colors.redAccent,
+    Colors.blueAccent,
+    Colors.deepOrangeAccent,
+    Colors.deepPurpleAccent,
+    Colors.purple,
+    Colors.red,
+    Colors.blueGrey,
+    Colors.lightBlueAccent,
+    Colors.lightGreenAccent,
 
   ];
 
@@ -42,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<List<User>> getUsers() async {
-    this.users.clear();
+     users.clear();
     String phone =await get();
     CollectionReference userCollectionRef = FirebaseFirestore.instance.collection(phone);
     QuerySnapshot userQuerySnapshot = await userCollectionRef.get();
@@ -56,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
         avatarUrl: userData["avatarUrl"],
         smoke: userData["smoke"],
       );
-      this.users.add(user);
+    users.add(user);
     });
 
     return  this.users;
@@ -68,9 +77,6 @@ class _LoginPageState extends State<LoginPage> {
 
     CollectionReference collectionRef = FirebaseFirestore.instance.collection(phoneNum);
     DocumentReference documentRef = collectionRef.doc(userId);
-    print(documentRef);
-    print(userId);
-    print(updatedValue);
     await documentRef.update({
       'avatarUrl': updatedValue.replaceAll("File:", ""),
     }).then((_) {
@@ -148,7 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                     ));
                   }
                   else if (snapshot.data == null) {
-                    print(snapshot.data == null);
                     return   GestureDetector(
                         child: Container(
                           width: width/5,
@@ -207,8 +212,7 @@ class _LoginPageState extends State<LoginPage> {
 
                               final Color color = _colors[index];
                               File img= File(users[index].avatarUrl.replaceAll("'", "").replaceAll("File:", "").replaceAll(" ", ""));
-                              print("img :$img");
-                              print(img.toString());
+
                               return GestureDetector(
                                 onTap: (){
                                   LoginPage.user=users[index];
@@ -272,7 +276,7 @@ class _LoginPageState extends State<LoginPage> {
                                             ),
                                             child:
                                                 img.toString()=="File: ''"?
-                                                Image.asset( "images/img_$index.png",
+                                                Image.asset( "images/img_${index>8? index%8:index%3}.png",
                                                   width: width/3.5,
                                                   height: width/3.5,
                                                   fit: BoxFit.fill,):

@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gokhan/Pages/LoginPage.dart';
-import 'package:gokhan/Entity/Message.dart';
 import 'package:gokhan/Services/Validation/validation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,60 +43,33 @@ class _RegisterPageState extends State<RegisterPage> {
       print('Failed to create user: $error');
     });
   }
-
-/*  Future<void> somethink(String name, String value, String avatarUrl, String smoke, String age) async{
-    String phoneNum = await get();
-    CollectionReference userCollectionRef = FirebaseFirestore.instance.collection(phoneNum);
-
-      DocumentReference userDocRef = userCollectionRef.doc("User");
-      DocumentReference usersCollectionRef = userDocRef.collection(name).doc();
-
-      await usersCollectionRef.set({
-        'id': usersCollectionRef.id,
-        'name': name,
-        'gender': value=="1" ? "F" : value=="2"? "M":"MB",
-        'avatarUrl': avatarUrl,
-        'smoke': smoke,
-        'age': age,
-      }).then(( _) {
-        print('added user: ${usersCollectionRef.id}');
-      }).catchError((error) {
-        print('Error: $error');
-      });
-    }
-
-
-
-
-*/
-/*
-  FirebaseFirestore fire = FirebaseFirestore.instance;
-  Future<void> addEntity(String name, String value, String avatarUrl, String smoke, String age) async {
-    DocumentReference docRef = FirebaseFirestore.instance.collection("User").doc();
-
-    await docRef.set({
-      'id': docRef.id,
-      'name': name,
-      'gender': value=="1" ? "F" : value=="2"? "M":"MB",
-      'avatarUrl': avatarUrl,
-      'smoke': smoke,
-      'age': age,
-    }).then((_) {
-      print('Belge eklendi: ${docRef.id}');
-    }).catchError((error) {
-      print('Belge ekleme işlemi başarısız oldu: $error');
-    });
-
-
-  }
-*/
-  var nameSurnameCont=TextEditingController();
-  var ageController =TextEditingController();
+  late TextEditingController _nameSurnameController;
+  late TextEditingController _ageController;
+  late FocusNode _nameFocusNode;
+  late FocusNode _ageFocusNode;
   bool _isChecked = false;
-  var sexValue=0 ;
-  var width ,height;
-
+  var sexValue = 0;
+  var width, height;
   var _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameSurnameController = TextEditingController();
+    _ageController = TextEditingController();
+    _nameFocusNode = FocusNode();
+    _ageFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _nameSurnameController.dispose();
+    _ageController.dispose();
+    _nameFocusNode.dispose();
+    _ageFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.shortestSide;
@@ -105,7 +77,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
 
       body:
-      Center(
+      GestureDetector(
+        onTap: (){
+          _nameFocusNode.unfocus();
+          _ageFocusNode.unfocus();
+        },
         child: Container(
           height: height,/*
           decoration: BoxDecoration(
@@ -142,8 +118,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             left: width/15,
                             right:width/15),
                         child: TextFormField(
+                          focusNode: _nameFocusNode,
                           style: TextStyle(color: Colors.black),
-                          controller: nameSurnameCont,
+                          controller: _nameSurnameController,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(fontSize: width/22 ,color: Colors.black),
                             errorBorder: OutlineInputBorder(
@@ -164,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(25.0)),
                             label: Text(
                               "Profile Name",
-                              style: TextStyle(fontSize: width/15,color: Colors.black),
+                              style: TextStyle(fontSize: width/20,color: Colors.black),
                             ),
                             fillColor: Colors.white,
                           ),
@@ -181,7 +158,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             right:width/15),
                         child: TextFormField(
                           style: TextStyle(color:  Colors.black),
-                          controller: ageController,
+                          focusNode: _ageFocusNode,
+                          controller: _ageController,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(fontSize: width/22 ,color:  Colors.black),
                             errorBorder: OutlineInputBorder(
@@ -202,7 +181,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(25.0)),
                             label: Text(
                               "Age",
-                              style: TextStyle(fontSize: width/15 ,color: Colors.black),
+                              style: TextStyle(fontSize:  width/20 ,color: Colors.black),
                             ),
                             fillColor:  Colors.black,
                           ),
@@ -230,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 scale: 1.5,
                                 child: Theme(
                                   data: Theme.of(context).copyWith(
-                                  unselectedWidgetColor:  Colors.black,
+                                  unselectedWidgetColor:  Colors.black87,
                                 ),
                                   child: Checkbox(
                                   activeColor: Colors.red,
@@ -239,11 +218,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                        borderRadius: BorderRadius.circular(25), //
                                      ),
                                   materialTapTargetSize: MaterialTapTargetSize.padded,
-                                  value: _isChecked,
+                                  value: _isChecked ,
                                   onChanged: (chacked){
                                     setState(() {
+                                      if(_isChecked==null){
+                                        print("asdsadsdd");
+                                      }
                                       _isChecked=chacked!;
-                                      //print(_isChecked);
+                                      print(_isChecked);
                                     });
                                   },),
                                 )),
@@ -353,7 +335,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         ),
                                       ],
                                     ),
-                                    value: 3,
+                                    value: 0,
                                     groupValue: sexValue,
                                     onChanged: (int? veri) {
                                       setState(() {
@@ -421,10 +403,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                                       setState(() {
                                         if (_formKey.currentState!.validate()) {
-                                          print("sdasad");
                                           setState(() {
-                                            createUser(nameSurnameCont.text, this.sexValue.toString(), " ", _isChecked.toString(), ageController.text).then((value) => {
-                                            print("sdasadasdasdasd"),
+                                            createUser(_nameSurnameController.text, this.sexValue.toString(), " ", _isChecked.toString(), _ageController.text).then((value) => {
                                               Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()))
                                             });
                                           });

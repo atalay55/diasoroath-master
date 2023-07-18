@@ -315,7 +315,7 @@ class _ReportPageState extends State<ReportPage> {
 
                       },
                       child: Container(
-                        color: selectedItems.contains(index)?Colors.blueAccent:Colors.white,
+                        color: selectedItems.contains(index)?Colors.blueAccent:Colors.white12,
                         height: 100,
                         width: width,
                         child: Padding(

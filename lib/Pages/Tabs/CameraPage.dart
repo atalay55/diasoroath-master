@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,9 @@ import 'package:gokhan/Pages/PhotoSend.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image/image.dart' as img;
+import 'package:perfect_volume_control/perfect_volume_control.dart';
+
+
 
 class CameraPage extends StatefulWidget {
   @override
@@ -15,6 +19,8 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   late List<CameraDescription> cameras;
   CameraController? cameraController;
+  late     StreamSubscription<double>? _subscription;
+  double _currentVolume = 0.0;
 
   var visible = false;
   bool isFlashOn = false;
@@ -30,6 +36,7 @@ class _CameraPageState extends State<CameraPage> {
     });
     return imageFile;
   }
+
 
   Future<void> rotateAndSaveImage(String imagePath) async {
     final img.Image? image = img.decodeImage(await File(imagePath).readAsBytes());
@@ -65,15 +72,21 @@ class _CameraPageState extends State<CameraPage> {
   void dispose() {
     cameraController?.dispose();
     super.dispose();
+
   }
 
   @override
   void initState() {
     startCamera(direction);
+    _subscription = PerfectVolumeControl.stream.listen((value) {
+
+      capturePhoto();
+
+    });
 
   }
 
-  void capturePhoto() async {
+  Future<void> capturePhoto() async {
     if (cameraController!.value.isInitialized) {
       try {
         final image = await cameraController!.takePicture();
