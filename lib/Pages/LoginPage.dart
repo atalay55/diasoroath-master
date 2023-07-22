@@ -117,6 +117,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
 
+    final text= MediaQuery.of(context).platformBrightness == Brightness.dark?
+    "DarkTheme":"LightTheme";
 
     var width = MediaQuery.of(context).size.shortestSide;
     return  Scaffold(
@@ -126,7 +128,12 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Padding(
             padding:  EdgeInsets.only(top: width/12),
-            child: Image.asset(
+            child: text =="DarkTheme"?Image.asset(
+              'images/logo1.png',
+              alignment: Alignment.center,
+              scale: 1,
+              height: width/1.5,
+            ):Image.asset(
               'images/Logo.png',
               alignment: Alignment.center,
               scale: 1,

@@ -62,6 +62,9 @@ class _CameraPageState extends State<CameraPage> {
       if (!mounted) {
         return;
       }
+
+      cameraController!.setFocusMode(FocusMode.auto);
+
       setState(() {}); //To refresh widget
     }).catchError((e) {
       print(e);

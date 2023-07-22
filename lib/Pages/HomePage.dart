@@ -25,6 +25,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
    return MaterialApp(
      debugShowCheckedModeBanner: false,
+     title: 'Diasoroath',
+     themeMode: ThemeMode.system,
+     theme: ThemeData(
+       scaffoldBackgroundColor: Colors.white,
+       colorScheme: ColorScheme.light(),
+       primarySwatch: Colors.blue,
+     ),
+     darkTheme: ThemeData(
+       scaffoldBackgroundColor: Colors.grey.shade900,
+       colorScheme: ColorScheme.dark(),
+     ),
       home: DefaultTabController(
         length: 3,
         child: Scaffold(

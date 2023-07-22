@@ -44,4 +44,19 @@ static checkAge(String age) {
   msg.isCorrect = true;
   return null;
 }
+
+static String checkPhoneNum(String number){
+
+  if(number.contains("+90")){
+
+    number = number.replaceAll("+90", "0");
+  }
+  else if(number.contains(" ")){
+    number = number.replaceAll(" ", "");
+  }
+
+  return number;
+
 }
+
+ }

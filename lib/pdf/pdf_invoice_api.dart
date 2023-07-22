@@ -1,5 +1,4 @@
 import 'package:gokhan/Entity/Report.dart';
-import 'package:gokhan/pdf/pdf_api.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -65,21 +64,20 @@ class PdfInvoiceApi {
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           pw.Text(
-              customer.id, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              customer.userId, style: pw.TextStyle(fontWeight: pw.FontWeight.bold ,fontSize: 30)),
         ],
       );
 
   static pw.Widget buildInvoiceInfo(InvoiceInfo info) {
 
     final titles = [
-      'Invoice Number:',
-      'Invoice Date:',
-      'Due Date:'
+      'broadcasting Number:',
+      'broadcasting Date:',
+
     ];
     final data = [
       '${info.number}',
       '${info.date.toString()}',
-      '${info.dueDate.toString()}',
     ];
 
     return pw.Column(

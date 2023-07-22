@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -93,19 +94,19 @@ class _ReportPageState extends State<ReportPage> {
 
   Future<void> shareReportPdf(Report report) async {
     final date = DateTime.now();
-    final dueDate = date.add(const Duration(days: 1));
-
+    final _date=  DateFormat('dd.MM.yyyy').format(date);
     final invoice = Invoice(
       report: Report(
         ImagePath: report.ImagePath,
-        reportDetail: report.reportDetail,
+        reportDetail: report.reportDetail =="true"?" hastalik tespit edildi ":report.reportDetail ==""?"AI çalismamaktadir" :"Sağlikli görünüyorsunuz",
         userId: report.userId,
         id: report.id,
       ),
       info: InvoiceInfo(
-        date: date,
-        dueDate: dueDate,
-        description: 'Bu uygulama vs Bu uygulama vsBu uygulama vsBu uygulama vsBu uygulama vs ',
+        date: _date,
+        description: 'Bu uygulamanin ürün haklari Diasoroath ekibine aittir.Uygulamanin dogruluk orani %60 dir. '
+            'Hasta report detayi kisminda hastalik tespit edildi olarak görünüyorsaniz. '
+            'Bir doktara görünmenizi tavsiye ediriz. Saglikli günler dileriz. ',
         number: '${DateTime.now().year}',
       ),
     );
@@ -117,66 +118,11 @@ class _ReportPageState extends State<ReportPage> {
     final file = File(filePath);
     await file.writeAsBytes(await pdf.save());
     await Share.shareFiles([filePath]);
-    /*
-    final pdf = pw.Document();
-
-    final image =await  PdfImage.file(
-      pdf.document,
-      bytes: await File(report.ImagePath.replaceAll("'", "")).readAsBytes(),
-    );
-
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return
-            pw.Padding(
-                padding: pw.EdgeInsets.all(8),
-                child:  pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                  children: [
-                    pw.Padding(
-                      padding: pw.EdgeInsets.all(8),
-                      child:pw.Text("User Name: ${report.userId}",style: pw.TextStyle(fontSize: 20)),
-                    ),
-                    pw.Padding(
-                      padding: pw.EdgeInsets.all(8),
-                      child:pw.Text("Photo path:\n${report.ImagePath}",style: pw.TextStyle(fontSize: 20)),
-                    ),
-                    pw.Padding(
-                      padding: pw.EdgeInsets.all(8),
-                      child:pw.Text("Report Id: ${report.id}",style: pw.TextStyle(fontSize: 20)),
-                    ),
-                    pw.Padding(
-                      padding: pw.EdgeInsets.all(8),
-                      child:pw.Text("Report Detail: ${report.reportDetail}",style: pw.TextStyle(fontSize: 20)),
-                    ),
-
-
-
-
-                  ],
-
-                )
-            );
-
-        },
-      ),
-    );
-
-    // PDF dosyasını kaydet
-    final output = await getTemporaryDirectory();
-    final filePath = '${output.path}/report_${report.id}.pdf';
-    final file = File(filePath);
-    await file.writeAsBytes(await pdf.save());
-
-    // Paylaşma işlemini gerçekleştir
-   await Share.shareFiles([filePath]);
-   */
 
   }
 
   Widget build(BuildContext context) {
+
     var width = MediaQuery.of(context).size.width;
     selecteModeOn=selectedItems.isNotEmpty;
 
@@ -191,7 +137,7 @@ class _ReportPageState extends State<ReportPage> {
             return Center(
               child: Column(
                 children: [
-                  Text('Veriler alınamadı'),
+                  Text('Veriler alınamadı',),
                 ],
               ),
             );
@@ -314,36 +260,38 @@ class _ReportPageState extends State<ReportPage> {
                         }
 
                       },
-                      child: Container(
-                        color: selectedItems.contains(index)?Colors.blueAccent:Colors.white12,
-                        height: 100,
-                        width: width,
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: 15.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  child: Image.file(
-                                    file,
-                                    width: width / 5,
-                                    height: width / 5,
-                                    fit: BoxFit.fill,
+                      child: Padding(
+                        padding:  EdgeInsets.only(left:8.0,right: 8.0,bottom: 8.0),
+                        child: Container(
+                          color: selectedItems.contains(index)?Colors.blueAccent:Colors.indigo,
+                          height: 100,
+                          width: width,
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 15.0),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    child: Image.file(
+                                      file,
+                                      width: width / 5,
+                                      height: width / 5,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 12.0),
-                                child: Text(
-                                  "Report ${(snapshot.data!.length - index).toString()}",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 25,
+                                Padding(
+                                  padding: EdgeInsets.only(left: 12.0),
+                                  child: Text(
+                                    "Report ${(snapshot.data!.length - index).toString()} ",
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

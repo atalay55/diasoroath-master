@@ -74,357 +74,348 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.shortestSide;
     height= MediaQuery.of(context).size.height;
+    final text= MediaQuery.of(context).platformBrightness == Brightness.dark?
+    "DarkTheme":"LightTheme";
     return Scaffold(
-
       body:
       GestureDetector(
         onTap: (){
           _nameFocusNode.unfocus();
           _ageFocusNode.unfocus();
         },
-        child: Container(
-          height: height,/*
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('images/background_image.jpg'),
-              fit: BoxFit.cover,
-              opacity: 0.9,
-            ),
-          ),*/
-          child: SingleChildScrollView(
-            child: Center(
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding:  EdgeInsets.only(top: width/7),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
+        child: SingleChildScrollView(
+          child: Center(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding:  EdgeInsets.only(top: width/7),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
 
-                      Padding(
-                        padding: EdgeInsets.only(top:0.0),
-                        child: Image.asset(
-                          'images/Logo.png',
-                          width: width/1.5,
-                          height: width/2,
-                          scale: 1,
-                          alignment: Alignment.center,
-                        ),
+                    Padding(
+                      padding: EdgeInsets.only(top:0.0),
+                      child:text =="DarkTheme"?Image.asset(
+                        'images/logo1.png',
+                        alignment: Alignment.center,
+                        scale: 1,
+                        height: width/1.5,
+                      ):Image.asset(
+                        'images/Logo.png',
+                        alignment: Alignment.center,
+                        scale: 1,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            bottom:width/12,
-                            left: width/15,
-                            right:width/15),
-                        child: TextFormField(
-                          focusNode: _nameFocusNode,
-                          style: TextStyle(color: Colors.black),
-                          controller: _nameSurnameController,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(fontSize: width/22 ,color: Colors.black),
-                            errorBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(width: 4, color: Colors.red),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(width: 4, color: Colors.red),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(width: 4, color: Colors.purpleAccent),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 4, color: Colors.green),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            label: Text(
-                              "Profile Name",
-                              style: TextStyle(fontSize: width/20,color: Colors.black),
-                            ),
-                            fillColor: Colors.white,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom:width/12,
+                          left: width/15,
+                          right:width/15),
+                      child: TextFormField(
+                        focusNode: _nameFocusNode,
+                        controller: _nameSurnameController,
+                        decoration: InputDecoration(
+                          errorStyle: TextStyle(fontSize: width/22 ),
+                          errorBorder: OutlineInputBorder(
+                              borderSide:
+                              BorderSide(width: 4, color: Colors.red),
+                              borderRadius: BorderRadius.circular(25.0)),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderSide:
+                              BorderSide(width: 4, color: Colors.red),
+                              borderRadius: BorderRadius.circular(25.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                              BorderSide(width: 4, color: Colors.purpleAccent),
+                              borderRadius: BorderRadius.circular(25.0)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 4, color: Colors.green),
+                              borderRadius: BorderRadius.circular(25.0)),
+                          label: Text(
+                            "Profile Name",
+                            style: TextStyle(fontSize: width/20),
                           ),
-                          validator: (value) {
-                          return  Validation.checkUserName(value!);
-                          },
-                        ),
-                      ),
 
-                      Padding(
-                        padding: EdgeInsets.only(
-                            bottom:width/15,
-                            left: width/15,
-                            right:width/15),
-                        child: TextFormField(
-                          style: TextStyle(color:  Colors.black),
-                          focusNode: _ageFocusNode,
-                          controller: _ageController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(fontSize: width/22 ,color:  Colors.black),
-                            errorBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(width: 4, color: Colors.red),
-                                borderRadius: BorderRadius.circular(25.0),),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(width: 4, color: Colors.red),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(width: 4, color: Colors.purpleAccent),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 4, color: Colors.green),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            label: Text(
-                              "Age",
-                              style: TextStyle(fontSize:  width/20 ,color: Colors.black),
-                            ),
-                            fillColor:  Colors.black,
+                        ),
+                        validator: (value) {
+                        return  Validation.checkUserName(value!);
+                        },
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom:width/15,
+                          left: width/15,
+                          right:width/15),
+                      child: TextFormField(
+                        focusNode: _ageFocusNode,
+                        controller: _ageController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          errorStyle: TextStyle(fontSize: width/22 ),
+                          errorBorder: OutlineInputBorder(
+                              borderSide:
+                              BorderSide(width: 4, color: Colors.red),
+                              borderRadius: BorderRadius.circular(25.0),),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderSide:
+                              BorderSide(width: 4, color: Colors.red),
+                              borderRadius: BorderRadius.circular(25.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                              BorderSide(width: 4, color: Colors.purpleAccent),
+                              borderRadius: BorderRadius.circular(25.0)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 4, color: Colors.green),
+                              borderRadius: BorderRadius.circular(25.0)),
+                          label: Text(
+                            "Age",
+                            style: TextStyle(fontSize:  width/20 ),
                           ),
-                          validator: (value) {
-                           return Validation.checkAge(value!);
-                          },
-                        ),
 
+                        ),
+                        validator: (value) {
+                         return Validation.checkAge(value!);
+                        },
                       ),
 
-                      Padding(
-                        padding:  EdgeInsets.only(left: width/12,bottom:width/30),
-                        child: Center(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text("Do you smoke ?",
-                                style: TextStyle(
-                                  fontSize: width/21,
-                                  color:  Colors.black
-                                ),
-                              ),
-                              Transform.scale(
-                                scale: 1.5,
-                                child: Theme(
-                                  data: Theme.of(context).copyWith(
-                                  unselectedWidgetColor:  Colors.black87,
-                                ),
-                                  child: Checkbox(
-                                  activeColor: Colors.red,
+                    ),
 
-                               shape:  RoundedRectangleBorder(
-                                       borderRadius: BorderRadius.circular(25), //
-                                     ),
-                                  materialTapTargetSize: MaterialTapTargetSize.padded,
-                                  value: _isChecked ,
-                                  onChanged: (chacked){
-                                    setState(() {
-                                      if(_isChecked==null){
-                                        print("asdsadsdd");
-                                      }
-                                      _isChecked=chacked!;
-                                      print(_isChecked);
-                                    });
-                                  },),
-                                )),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      Padding(
-                        padding:  EdgeInsets.only(left: width/12),
+                    Padding(
+                      padding:  EdgeInsets.only(left: width/12,bottom:width/30),
+                      child: Center(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              "Gender:",
+                            Text("Do you smoke ?",
                               style: TextStyle(
                                 fontSize: width/21,
-                                color:  Colors.black
+
                               ),
                             ),
+                            Transform.scale(
+                              scale: 1.5,
+                              child: Theme(
+                                data: Theme.of(context).copyWith(
+
+                              ),
+                                child: Checkbox(
+                                activeColor: Colors.red,
+
+                             shape:  RoundedRectangleBorder(
+                                     borderRadius: BorderRadius.circular(25), //
+                                   ),
+                                materialTapTargetSize: MaterialTapTargetSize.padded,
+                                value: _isChecked ,
+                                onChanged: (chacked){
+                                  setState(() {
+                                    if(_isChecked==null){
+                                      print("asdsadsdd");
+                                    }
+                                    _isChecked=chacked!;
+                                    print(_isChecked);
+                                  });
+                                },),
+                              )),
                           ],
                         ),
                       ),
+                    ),
+
+                    Padding(
+                      padding:  EdgeInsets.only(left: width/12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Gender:",
+                            style: TextStyle(
+                              fontSize: width/21,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
 
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal:width/20 ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Flexible(
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal:width/20 ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: Transform.scale(
+                              scale: 1.2,
+                              child: Theme(
+                                data: Theme.of(context).copyWith(
+
+                                ),
+                                child: RadioListTile<int>(
+
+                                  activeColor: Colors.red,
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                        "F",
+                                        style: TextStyle(fontSize: width / 25),
+                                      ),
+                                    ],
+                                  ),
+                                  value: 1,
+                                  groupValue: sexValue,
+                                  onChanged: (int? veri) {
+                                    setState(() {
+                                      sexValue = veri!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+
+
+                          Theme(
+                            data: Theme.of(context).copyWith(
+
+                            ),
+                            child: Flexible(
                               child: Transform.scale(
                                 scale: 1.2,
-                                child: Theme(
-                                  data: Theme.of(context).copyWith(
-                                    unselectedWidgetColor:  Colors.black,
+                                child: RadioListTile<int>(
+                                  activeColor: Colors.red,
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                        "M",
+                                        style: TextStyle(fontSize: width / 25),
+                                      ),
+                                    ],
                                   ),
-                                  child: RadioListTile<int>(
-
-                                    activeColor: Colors.red,
-                                    title: Row(
-                                      children: [
-                                        Text(
-                                          "F",
-                                          style: TextStyle(fontSize: width / 25, color:  Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                    value: 1,
-                                    groupValue: sexValue,
-                                    onChanged: (int? veri) {
-                                      setState(() {
-                                        sexValue = veri!;
-                                      });
-                                    },
-                                  ),
+                                  value: 2,
+                                  groupValue: sexValue,
+                                  onChanged: (int? veri) {
+                                    setState(() {
+                                      sexValue = veri!;
+                                    });
+                                  },
                                 ),
                               ),
                             ),
+                          ),
 
+                          Theme(
+                            data: Theme.of(context).copyWith(
 
-                            Theme(
-                              data: Theme.of(context).copyWith(
-                                unselectedWidgetColor:  Colors.black,
-                              ),
-                              child: Flexible(
-                                child: Transform.scale(
-                                  scale: 1.2,
-                                  child: RadioListTile<int>(
-                                    activeColor: Colors.red,
-                                    title: Row(
-                                      children: [
-                                        Text(
-                                          "M",
-                                          style: TextStyle(fontSize: width / 25, color:  Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                    value: 2,
-                                    groupValue: sexValue,
-                                    onChanged: (int? veri) {
-                                      setState(() {
-                                        sexValue = veri!;
-                                      });
-                                    },
+                            ),
+                            child: Flexible(
+                              child: Transform.scale(
+                                scale: 1.2,
+                                child: RadioListTile<int>(
+                                  activeColor: Colors.red,
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                        "NB",
+                                        style: TextStyle(fontSize: width / 25),
+                                      ),
+                                    ],
                                   ),
+                                  value: 0,
+                                  groupValue: sexValue,
+                                  onChanged: (int? veri) {
+                                    setState(() {
+                                      sexValue = veri!;
+                                    });
+                                  },
                                 ),
                               ),
                             ),
+                          ),
 
-                            Theme(
-                              data: Theme.of(context).copyWith(
-                                unselectedWidgetColor:  Colors.black,
-                              ),
-                              child: Flexible(
-                                child: Transform.scale(
-                                  scale: 1.2,
-                                  child: RadioListTile<int>(
-                                    activeColor: Colors.red,
-                                    title: Row(
-                                      children: [
-                                        Text(
-                                          "MB",
-                                          style: TextStyle(fontSize: width / 25, color: Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                    value: 0,
-                                    groupValue: sexValue,
-                                    onChanged: (int? veri) {
-                                      setState(() {
-                                        sexValue = veri!;
-                                      });
-                                    },
+                        ],
+
+                      ),
+                    ),
+
+                    Center(
+                      child: Padding(
+                        padding:  EdgeInsets.symmetric(vertical:width/15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:  EdgeInsets.only(top:width/20),
+                              child: SizedBox(
+                                width: width/3.5,
+                                height: width/8.5,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.deepPurpleAccent, // Background color
+                                    onPrimary: Colors.white,
+                                    shadowColor: Colors.yellowAccent,
+                                    shape:   RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20), //
+                                    ),//
                                   ),
+                                  onPressed: () {
+
+                                    setState(() {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                                    });
+
+
+                                  },
+                                  child: Text('Back',style: TextStyle(fontSize: width/20)),
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding:  EdgeInsets.only(top:width/20,left: width/5),
+                              child: SizedBox(
+                                width: width/3.5,
+                                height: width/8.5,
 
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.deepPurpleAccent, // Background color
+                                    onPrimary: Colors.white,
+                                    shape:   RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20), //
+                                    ),
+                                  ),
+                                  onPressed: () {
+
+                                    setState(() {
+                                      if (_formKey.currentState!.validate()) {
+                                        setState(() {
+                                          createUser(_nameSurnameController.text, this.sexValue.toString(), " ", _isChecked.toString(), _ageController.text).then((value) => {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()))
+                                          });
+                                        });
+
+
+                                      }
+                                    });
+
+                                  },
+                                  child: Text('Submit',style: TextStyle(fontSize: width/20)),
+                                ),
+                              ),
+                            ),
                           ],
 
                         ),
                       ),
-
-                      Center(
-                        child: Padding(
-                          padding:  EdgeInsets.symmetric(vertical:width/15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:  EdgeInsets.only(top:width/20),
-                                child: SizedBox(
-                                  width: width/3.5,
-                                  height: width/8.5,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.deepPurpleAccent, // Background color
-                                      onPrimary: Colors.white,
-                                      shadowColor: Colors.yellowAccent,
-                                      shape:   RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20), //
-                                      ),// Text Color (Foreground color)
-                                    ),
-                                    onPressed: () {
-
-                                      setState(() {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
-                                      });
-
-
-                                    },
-                                    child: Text('Back',style: TextStyle(fontSize: width/20)),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:  EdgeInsets.only(top:width/20,left: width/5),
-                                child: SizedBox(
-                                  width: width/3.5,
-                                  height: width/8.5,
-
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.deepPurpleAccent, // Background color
-                                      onPrimary: Colors.white,
-                                      shape:   RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20), //
-                                      ),
-                                    ),
-                                    onPressed: () {
-
-                                      setState(() {
-                                        if (_formKey.currentState!.validate()) {
-                                          setState(() {
-                                            createUser(_nameSurnameController.text, this.sexValue.toString(), " ", _isChecked.toString(), _ageController.text).then((value) => {
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()))
-                                            });
-                                          });
-
-
-                                        }
-                                      });
-
-                                    },
-                                    child: Text('Submit',style: TextStyle(fontSize: width/20)),
-                                  ),
-                                ),
-                              ),
-                            ],
-
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
