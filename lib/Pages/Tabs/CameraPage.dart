@@ -20,6 +20,7 @@ class _CameraPageState extends State<CameraPage> {
   late List<CameraDescription> cameras;
   CameraController? cameraController;
   late     StreamSubscription<double>? _subscription;
+  double _currentVolume = 0.0;
   var visible = false;
   bool isFlashOn = false;
 
@@ -90,6 +91,9 @@ class _CameraPageState extends State<CameraPage> {
   Future<void> capturePhoto() async {
     if (cameraController!.value.isInitialized) {
       try {
+        // Ensure flash is off before capturing a photo
+        cameraController!.setFlashMode(FlashMode.off);
+
         final image = await cameraController!.takePicture();
         final String imagePath = image.path;
         await rotateAndSaveImage(imagePath);

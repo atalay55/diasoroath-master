@@ -21,8 +21,8 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
 
   List<int> selectedItems =[];
-  List<Report> selectedReport =[];
-  static late bool selecteModeOn ;
+  late List<Report> selectedReport ;
+
 
   Future<String> get() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -124,7 +124,7 @@ class _ReportPageState extends State<ReportPage> {
   Widget build(BuildContext context) {
     final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
     var width = MediaQuery.of(context).size.width;
-    selecteModeOn=selectedItems.isNotEmpty;
+
 
 
     return Scaffold(
@@ -162,10 +162,11 @@ class _ReportPageState extends State<ReportPage> {
 
                 return GestureDetector(
                   onLongPress: (){
+                    selectedReport=[];
                     setState(() {
                       selectedItems.add(index);
                       selectedReport.add(snapshot.data![index]);
-                      selecteModeOn = true;
+
                     });
                   },
                   child: Dismissible(
@@ -232,20 +233,27 @@ class _ReportPageState extends State<ReportPage> {
                     },
                     child: GestureDetector(
                       onTap: () {
-                        if(selecteModeOn){
+
+                        if(selectedItems.isNotEmpty){
                           setState(() {
-
                             if(selectedItems.contains(index)){
-                              selectedItems.remove(index);
-                              selectedReport.remove(snapshot.data![index]);
-
+                              setState(() {
+                                selectedItems.remove(index);
+                                selectedReport.remove(snapshot.data![index]);
+                                print(selectedItems);
+                              });
                             }
                             else{
-                              selectedItems.add(index);
-                              selectedReport.add(snapshot.data![index]);
+                              setState(() {
+                                selectedItems.add(index);
+                                selectedReport.add(snapshot.data![index]);
+
+                              });
+
 
                             }
                           });
+
 
                         }
                         else{
@@ -268,7 +276,7 @@ class _ReportPageState extends State<ReportPage> {
                               color: Colors.white24, // Change this color to the desired border color
                               width: 3.0, // Adjust the border width as needed
                             ),
-                          //  color: isDark? selectedItems.contains(index) ? Colors.blueGrey : Colors.white60: selectedItems.contains(index) ? Colors.blueAccent : Colors.black26,
+                         color:  selectedItems.contains(index) ? Colors.white24 : null,
                             // Add more styling properties if needed
                           ),
 
@@ -313,14 +321,15 @@ class _ReportPageState extends State<ReportPage> {
         },
         future: getEntity(),
       ),
-      floatingActionButton: selecteModeOn ?FloatingActionButton(
+      floatingActionButton: selectedItems.isNotEmpty ?FloatingActionButton(
         onPressed: () async{
+
          await deleteEntities(selectedReport);
          setState(() {
 
          });
           },
-        child: Icon(Icons.remove),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center ,crossAxisAlignment: CrossAxisAlignment.center,children: [Icon(Icons.remove), Text(selectedItems.length.toString())],),
       ):null
     );
   }
