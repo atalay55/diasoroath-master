@@ -133,7 +133,6 @@ class _ReportPageState extends State<ReportPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            print("1");
             return Center(
               child: Column(
                 children: [
@@ -261,9 +260,14 @@ class _ReportPageState extends State<ReportPage> {
 
                       },
                       child: Padding(
-                        padding:  EdgeInsets.only(left:8.0,right: 8.0,bottom: 8.0),
+                        padding: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 8.0),
                         child: Container(
-                          color: selectedItems.contains(index)?Colors.blueAccent:Colors.indigo,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: selectedItems.contains(index) ? Colors.blueAccent : Colors.black26,
+                            // Add more styling properties if needed
+                          ),
+
                           height: 100,
                           width: width,
                           child: Padding(
@@ -294,7 +298,7 @@ class _ReportPageState extends State<ReportPage> {
                             ),
                           ),
                         ),
-                      ),
+                      )
                     ),
                   ),
                 );

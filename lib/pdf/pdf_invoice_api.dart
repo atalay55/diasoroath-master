@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gokhan/Entity/Report.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -5,7 +8,9 @@ import 'package:pdf/widgets.dart' as pw;
 import 'Invoice.dart';
 
 class PdfInvoiceApi {
+
   static Future<pw.Document> generate(Invoice invoice) async {
+    final imageJpg = (await File(invoice.report.ImagePath.replaceAll("'", "")));
     final pdf = pw.Document();
 
     pdf.addPage(pw.MultiPage(
@@ -14,9 +19,9 @@ class PdfInvoiceApi {
         buildHeader(invoice),
         pw.SizedBox(height: 3 * PdfPageFormat.cm),
         buildTitle(invoice),
+        buildImage(imageJpg: imageJpg.readAsBytesSync()),
         buildSimpleText(title: "Report Id :", value: invoice.report.id),
         buildSimpleText(title: "User Name :", value: invoice.report.userId),
-        buildSimpleText(title: "Image Path :", value: invoice.report.ImagePath),
         buildSimpleText(title: "Report Detail: ", value: invoice.report.reportDetail),
 
         pw.Divider(),
@@ -127,6 +132,26 @@ class PdfInvoiceApi {
 
 
       ],
+    );
+  }
+
+  static pw.Widget buildImage ({
+  required  final imageJpg ,
+  })  {
+    final image = pw.MemoryImage(imageJpg);
+    return pw.Container(
+      height: 100,
+      width: 250,
+      child: pw.Row(
+        children: [
+          pw.Center(
+            child: pw.ClipRRect(
+              verticalRadius: 32,
+              child:   pw.Image(image),
+              ),
+            ),
+        ],
+      ),
     );
   }
 
