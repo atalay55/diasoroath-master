@@ -14,13 +14,15 @@ class ReportPageDetail extends StatefulWidget {
 class _ReportPageDetailState extends State<ReportPageDetail> {
   @override
   Widget build(BuildContext context) {
+    final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
     var width = MediaQuery.of(context).size.width;
     File file = File(widget.report.ImagePath.replaceAll("'", ""));
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Diasoroath'),
-        backgroundColor: Colors.deepPurpleAccent,
+        toolbarHeight: 80,
+        backgroundColor:isDark? Colors.white10: Colors.deepPurpleAccent,
       ),
       body: widget.report.userId == LoginPage.user!.id
           ? Container(
@@ -29,17 +31,32 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: file != null
-                  ? Image.file(
-                file,
-                width: width,
-                height: width/1.5,
-                fit: BoxFit.fill,
-              )
-                  : Center(child: CircularProgressIndicator()),
+          Padding(
+            padding: EdgeInsets.all(15),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), // Adjust the radius value as needed
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 2),
+                    blurRadius: 6,
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10), // Match the radius here
+                child: file != null
+                    ? Image.file(
+                  file,
+                  width: width,
+                  height: width / 1.5,
+                  fit: BoxFit.cover,
+                )
+                    : Center(child: CircularProgressIndicator()),
+              ),
             ),
+          ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15.0,
@@ -56,7 +73,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                     TextSpan(
                       text: 'Age: ',
                       style: TextStyle(
-                        color: Colors.deepPurpleAccent,
+                        color: isDark? Colors.white70: Colors.deepPurpleAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),
@@ -88,7 +105,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                     TextSpan(
                       text: 'Smoke: ',
                       style: TextStyle(
-                        color: Colors.deepPurpleAccent,
+                        color: isDark? Colors.white70: Colors.deepPurpleAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),
@@ -120,7 +137,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                     TextSpan(
                       text: 'Gender: ',
                       style: TextStyle(
-                        color: Colors.deepPurpleAccent,
+                        color: isDark? Colors.white70: Colors.deepPurpleAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),
@@ -152,7 +169,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                     TextSpan(
                       text: 'Do you have any sick: ',
                       style: TextStyle(
-                        color: Colors.deepPurpleAccent,
+                        color: isDark? Colors.white70: Colors.deepPurpleAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),

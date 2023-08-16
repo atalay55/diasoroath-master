@@ -78,6 +78,7 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
     final double width = MediaQuery.of(context).size.shortestSide;
     return Scaffold(
       appBar: AppBar(

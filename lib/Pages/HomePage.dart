@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
    return MaterialApp(
      debugShowCheckedModeBanner: false,
      title: 'Diasoroath',
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             title: const Text('Diasoroath'),
-            backgroundColor: Colors.deepPurpleAccent,
+            backgroundColor:isDark? Colors.white10: Colors.deepPurpleAccent,
           ),
           body:  SafeArea(
             child: TabBarView(

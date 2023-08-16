@@ -122,7 +122,7 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   Widget build(BuildContext context) {
-
+    final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
     var width = MediaQuery.of(context).size.width;
     selecteModeOn=selectedItems.isNotEmpty;
 
@@ -264,7 +264,11 @@ class _ReportPageState extends State<ReportPage> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: selectedItems.contains(index) ? Colors.blueAccent : Colors.black26,
+                            border: Border.all(
+                              color: Colors.white24, // Change this color to the desired border color
+                              width: 3.0, // Adjust the border width as needed
+                            ),
+                          //  color: isDark? selectedItems.contains(index) ? Colors.blueGrey : Colors.white60: selectedItems.contains(index) ? Colors.blueAccent : Colors.black26,
                             // Add more styling properties if needed
                           ),
 

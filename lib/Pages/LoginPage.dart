@@ -116,10 +116,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final text= MediaQuery.of(context).platformBrightness == Brightness.dark?
-    "DarkTheme":"LightTheme";
-
+    final isDark= MediaQuery.of(context).platformBrightness == Brightness.dark;
     var width = MediaQuery.of(context).size.shortestSide;
     return  Scaffold(
       body: Column(
@@ -128,11 +125,11 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Padding(
             padding:  EdgeInsets.only(top: width/12),
-            child: text =="DarkTheme"?Image.asset(
+            child: isDark ?Image.asset(
               'images/logo1.png',
               alignment: Alignment.center,
               scale: 1,
-              height: width/1.5,
+              height: width/1.6,
             ):Image.asset(
               'images/Logo.png',
               alignment: Alignment.center,
@@ -247,30 +244,20 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Padding(
                                   padding:  EdgeInsets.all(8),
                                   child: Container(
-                                    width: 100,
-                                    height: 100,
+                                    width: 75,
+                                    height: 75,
                                     decoration: BoxDecoration(
-                                      color: color,
+
                                       borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(width: 2),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 2,
-                                          blurRadius: 5,
-                                          offset: Offset(0, 3),
-                                        ),
-                                      ],
+                                      border: Border.all(width: 3,color: Colors.white24),
+
                                     ),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         GestureDetector(
                                           onLongPress: () async{
-
                                             await _pickImageFromGallery().then((value) {
-
-                                                print(users[index].id);
                                                 setState(() {
                                                   updateDocument(  users[index].id, value.toString());});
                                                 });
@@ -279,22 +266,24 @@ class _LoginPageState extends State<LoginPage> {
 
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              border:Border.all(width:2),
+
                                             ),
-                                            child:
-                                                img.toString()=="File: ''"?
-                                                Image.asset( "images/img_${index>8? index%8:index%3}.png",
-                                                  width: width/3.5,
-                                                  height: width/3.5,
-                                                  fit: BoxFit.fill,):
-                                                Image.file(
-
-                                                  img ,
-                                                  width: width/3.5,
-                                                  height: width/3.5,
-                                                  fit: BoxFit.fill,)
-
-
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(25),
+                                              child: img.toString() == "File: ''"
+                                                  ? Image.asset(
+                                                "images/img_${index > 8 ? index % 8 : index % 3}.png",
+                                                width: width / 3.5,
+                                                height: width / 3.5,
+                                                fit: BoxFit.fill,
+                                              )
+                                                  : Image.file(
+                                                img,
+                                                width: width / 3.5,
+                                                height: width / 3.5,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
                                           ),
                                         ),
 
@@ -348,17 +337,10 @@ class _LoginPageState extends State<LoginPage> {
                                 height: width/5,
 
                                 decoration: BoxDecoration(
-                                  color:Colors.deepPurpleAccent,
+                                  color:isDark? null: Colors.deepPurpleAccent,
                                   borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(width: 2),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 5,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
+                                  border: Border.all(width: 2 ,color: Colors.white24),
+
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,

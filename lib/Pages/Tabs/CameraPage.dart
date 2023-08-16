@@ -20,8 +20,6 @@ class _CameraPageState extends State<CameraPage> {
   late List<CameraDescription> cameras;
   CameraController? cameraController;
   late     StreamSubscription<double>? _subscription;
-  double _currentVolume = 0.0;
-
   var visible = false;
   bool isFlashOn = false;
 
@@ -165,6 +163,9 @@ class _CameraPageState extends State<CameraPage> {
                         Padding(
                           padding:  EdgeInsets.only(left: width/15),
                           child: GestureDetector(
+                            onLongPress: (){
+
+                            },
                             onTap: capturePhoto,
                             child: button(Icons.camera_alt_outlined,   width),
                           ),
@@ -185,7 +186,7 @@ class _CameraPageState extends State<CameraPage> {
           child: SpeedDial(
           animatedIcon:AnimatedIcons.menu_close,
           icon:Icons.arrow_upward,
-          backgroundColor: Colors.deepPurpleAccent,
+          backgroundColor: Colors.white24,
 
           buttonSize: width/6,
 
@@ -206,7 +207,7 @@ class _CameraPageState extends State<CameraPage> {
                 child: Icon(
                   isFlashOn ? Icons.flash_on : Icons.flash_off, // Flash durumuna göre farklı bir ikon kullan
                 ),
-                backgroundColor: Colors.yellowAccent,
+                backgroundColor: Colors.white24,
                 label: "open flash"
             )
 
@@ -223,7 +224,7 @@ class _CameraPageState extends State<CameraPage> {
                     });
                   }
                   );},
-                backgroundColor: Colors.yellowAccent,
+                backgroundColor: Colors.white24,
               child:Icon(Icons.add_circle)
                 ,label: "select photo"
             ),
@@ -237,7 +238,7 @@ class _CameraPageState extends State<CameraPage> {
               child: Icon(Icons.flip_camera_ios_outlined),
                 label: "change camera",
 
-              backgroundColor: Colors.yellowAccent,
+              backgroundColor: Colors.white24,
 
             )
           ],
@@ -264,10 +265,10 @@ class _CameraPageState extends State<CameraPage> {
         width: width / 6,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.yellowAccent,
+          color: Colors.white24,
           boxShadow: [
             BoxShadow(
-              color: Colors.black26,
+              color: Colors.white24,
               offset: Offset(2, 2),
               blurRadius: 10,
             ),
@@ -276,7 +277,7 @@ class _CameraPageState extends State<CameraPage> {
         child: Center(
           child: Icon(
             icon,
-            color: Colors.black54,
+            color: Colors.black,
           ),
         ),
       ),
