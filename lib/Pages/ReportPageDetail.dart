@@ -21,7 +21,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Diasoroath'),
-        toolbarHeight: 80,
+        toolbarHeight: width/5,
         backgroundColor:isDark? Colors.white10: Colors.deepPurpleAccent,
       ),
       body: widget.report.userId == LoginPage.user!.id

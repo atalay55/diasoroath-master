@@ -83,7 +83,8 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Diasoroath'),
-        backgroundColor: Colors.deepPurpleAccent,
+        toolbarHeight: width/5,
+        backgroundColor:isDark? Colors.white10: Colors.deepPurpleAccent,
       ),
       body: Center(
         child: Form(
@@ -93,41 +94,39 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(vertical: width / 8, horizontal: width / 20),
+                padding: EdgeInsets.symmetric(vertical: width / 6, horizontal: width / 20),
                 child: Text(
                   'Please enter phone number',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize:width/18),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: width / 15, left: width / 15, right: width / 15),
                 child: TextFormField(
-                  style: TextStyle(color: Colors.black),
+
                   controller: ageController,
                   decoration: InputDecoration(
                     errorStyle: TextStyle(fontSize: width / 22,),
                     errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 4, color: Colors.red),
-                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(width: 2, color: Colors.red),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 4, color: Colors.red),
-                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(width: 2, color: Colors.red),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 4, color: Colors.purpleAccent),
-                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.purpleAccent),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 4, color: Colors.green),
-                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(width: 2, color: Colors.green),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
                     label: Text(
-                      phoneNumber.isNotEmpty ? "${phoneNumber}" : "Phone number",
-                      style: TextStyle(color: Colors.black),
+                      phoneNumber.isNotEmpty ? "${phoneNumber}" : "Phone number"
                     ),
                     hintText: "${phoneNumber}",
-                    hintStyle: TextStyle(color: Colors.black),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -152,42 +151,48 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
                   },
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.deepPurpleAccent, // Background color
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+              SizedBox(
+                height: width/9,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: isDark? Colors.white24: Colors.deepPurpleAccent, // Background color
+                    onPrimary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
+                  child: Text('Select Phone', style: TextStyle(fontSize: width / 20)),
+                  onPressed: () async {
+                    await getPhoneNumber();
+                  },
                 ),
-                child: Text('Select Phone', style: TextStyle(fontSize: width / 20)),
-                onPressed: () async {
-                  await getPhoneNumber();
-                },
               ),
               Padding(
                 padding: EdgeInsets.only(top: width / 15.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.deepPurpleAccent, // Background color
-                    onPrimary: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                child: SizedBox(
+                  height: width/10,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: isDark? Colors.white24: Colors.deepPurpleAccent,
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     ),
-                  ),
-                  child: Text('Send', style: TextStyle(fontSize: width / 20)),
-                  onPressed: () async {
-                    if (ageController.text.isNotEmpty || phoneNumber.isNotEmpty) {
+                    child: Text('Send', style: TextStyle(fontSize: width / 20)),
+                    onPressed: () async {
+                      if (ageController.text.isNotEmpty || phoneNumber.isNotEmpty) {
 
-                    if (_formKey.currentState!.validate()) {
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                      await prefs.setBool('isFirstRun', false);
-                      await prefs.setString('phoneNum',
-                          phoneNumber.isEmpty ? Validation.checkPhoneNum(ageController.text) : Validation.checkPhoneNum(phoneNumber));
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
-                    }
-                    }
-                  },
+                      if (_formKey.currentState!.validate()) {
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('isFirstRun', false);
+                        await prefs.setString('phoneNum',
+                            phoneNumber.isEmpty ? Validation.checkPhoneNum(ageController.text) : Validation.checkPhoneNum(phoneNumber));
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+                      }
+                      }
+                    },
+                  ),
                 ),
               ),
             ],

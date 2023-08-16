@@ -73,8 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.shortestSide;
     height= MediaQuery.of(context).size.height;
-    final text= MediaQuery.of(context).platformBrightness == Brightness.dark?
-    "DarkTheme":"LightTheme";
+    final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
     return Scaffold(
       body:
       GestureDetector(
@@ -95,11 +94,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     Padding(
                       padding: EdgeInsets.only(top:0.0),
-                      child:text =="DarkTheme"?Image.asset(
+                      child:isDark ?Image.asset(
                         'images/logo1.png',
                         alignment: Alignment.center,
                         scale: 1,
-                        height: width/1.5,
+                        height: width/1.7,
                       ):Image.asset(
                         'images/Logo.png',
                         alignment: Alignment.center,
@@ -118,20 +117,19 @@ class _RegisterPageState extends State<RegisterPage> {
                           errorStyle: TextStyle(fontSize: width/22 ),
                           errorBorder: OutlineInputBorder(
                               borderSide:
-                              BorderSide(width: 4, color: Colors.red),
-                              borderRadius: BorderRadius.circular(25.0)),
+                              BorderSide(width: 2, color: Colors.red),
+                              borderRadius: BorderRadius.circular(15.0)),
                           focusedErrorBorder: OutlineInputBorder(
                               borderSide:
-                              BorderSide(width: 4, color: Colors.red),
-                              borderRadius: BorderRadius.circular(25.0)),
+                              BorderSide(width: 2, color: Colors.red),
+                              borderRadius: BorderRadius.circular(15.0)),
                           enabledBorder: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(width: 4, color: Colors.purpleAccent),
-                              borderRadius: BorderRadius.circular(25.0)),
+                            borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.purpleAccent),
+                            borderRadius: BorderRadius.circular(15.0),),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                  width: 4, color: Colors.green),
-                              borderRadius: BorderRadius.circular(25.0)),
+                                  width: 2, color: Colors.green),
+                              borderRadius: BorderRadius.circular(15.0)),
                           label: Text(
                             "Profile Name",
                             style: TextStyle(fontSize: width/20),
@@ -157,20 +155,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           errorStyle: TextStyle(fontSize: width/22 ),
                           errorBorder: OutlineInputBorder(
                               borderSide:
-                              BorderSide(width: 4, color: Colors.red),
-                              borderRadius: BorderRadius.circular(25.0),),
+                              BorderSide(width: 2, color: Colors.red),
+                              borderRadius: BorderRadius.circular(15.0),),
                           focusedErrorBorder: OutlineInputBorder(
                               borderSide:
-                              BorderSide(width: 4, color: Colors.red),
-                              borderRadius: BorderRadius.circular(25.0)),
+                              BorderSide(width: 2, color: Colors.red),
+                              borderRadius: BorderRadius.circular(15.0)),
                           enabledBorder: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(width: 4, color: Colors.purpleAccent),
-                              borderRadius: BorderRadius.circular(25.0)),
+                            borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.purpleAccent),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                  width: 4, color: Colors.green),
-                              borderRadius: BorderRadius.circular(25.0)),
+                                  width: 2, color: Colors.green),
+                              borderRadius: BorderRadius.circular(15.0)),
                           label: Text(
                             "Age",
                             style: TextStyle(fontSize:  width/20 ),
@@ -204,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                               ),
                                 child: Checkbox(
-                                activeColor: Colors.red,
+                                activeColor: Colors.white,checkColor: Colors.black,
 
                              shape:  RoundedRectangleBorder(
                                      borderRadius: BorderRadius.circular(25), //
@@ -258,7 +256,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 child: RadioListTile<int>(
 
-                                  activeColor: Colors.red,
+                                  activeColor: Colors.white,
                                   title: Row(
                                     children: [
                                       Text(
@@ -288,7 +286,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Transform.scale(
                                 scale: 1.2,
                                 child: RadioListTile<int>(
-                                  activeColor: Colors.red,
+                                  activeColor: Colors.white,
                                   title: Row(
                                     children: [
                                       Text(
@@ -317,7 +315,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Transform.scale(
                                 scale: 1.2,
                                 child: RadioListTile<int>(
-                                  activeColor: Colors.red,
+                                  activeColor: Colors.white,
                                   title: Row(
                                     children: [
                                       Text(
@@ -357,17 +355,17 @@ class _RegisterPageState extends State<RegisterPage> {
                                 height: width/8.5,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.deepPurpleAccent, // Background color
+                                    primary: isDark ? Colors.white10 :Colors.deepPurpleAccent, // Background color
                                     onPrimary: Colors.white,
-                                    shadowColor: Colors.yellowAccent,
+
                                     shape:   RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20), //
+                                      borderRadius: BorderRadius.circular(15), //
                                     ),//
                                   ),
                                   onPressed: () {
 
                                     setState(() {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                                       Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                     });
 
 
@@ -384,26 +382,17 @@ class _RegisterPageState extends State<RegisterPage> {
 
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.deepPurpleAccent, // Background color
+                                    primary: isDark ? Colors.white10 :Colors.deepPurpleAccent, // Background color
                                     onPrimary: Colors.white,
                                     shape:   RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20), //
+                                      borderRadius: BorderRadius.circular(15), //
                                     ),
                                   ),
-                                  onPressed: () {
-
-                                    setState(() {
-                                      if (_formKey.currentState!.validate()) {
-                                        setState(() {
-                                          createUser(_nameSurnameController.text, this.sexValue.toString(), " ", _isChecked.toString(), _ageController.text).then((value) => {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()))
-                                          });
-                                        });
-
-
-                                      }
-                                    });
-
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      await createUser(_nameSurnameController.text, sexValue.toString(), " ", _isChecked.toString(), _ageController.text);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                                    }
                                   },
                                   child: Text('Submit',style: TextStyle(fontSize: width/20)),
                                 ),
