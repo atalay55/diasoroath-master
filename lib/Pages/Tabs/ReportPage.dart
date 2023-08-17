@@ -278,7 +278,7 @@ class _ReportPageState extends State<ReportPage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                             border: Border.all(
-                              color: Colors.white24, // Change this color to the desired border color
+                              color: isDark?  Colors.white24:Colors.black45, // Change this color to the desired border color
                               width: 3.0, // Adjust the border width as needed
                             ),
                          color:  selectedItems.contains(index) ? Colors.white24 : null,

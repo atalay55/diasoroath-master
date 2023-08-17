@@ -22,28 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   late  File? imageFile= null;
 
 
-  final List<Color> _colors = [
-    Colors.redAccent,
-    Colors.blueAccent,
-    Colors.deepOrangeAccent,
-    Colors.deepPurpleAccent,
-    Colors.purple,
-    Colors.red,
-    Colors.blueGrey,
-    Colors.lightBlueAccent,
-    Colors.lightGreenAccent,
-    Colors.redAccent,
-    Colors.blueAccent,
-    Colors.deepOrangeAccent,
-    Colors.deepPurpleAccent,
-    Colors.purple,
-    Colors.red,
-    Colors.blueGrey,
-    Colors.lightBlueAccent,
-    Colors.lightGreenAccent,
-
-  ];
-
   Future<String> get() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? val =  await prefs.getString('phoneNum');
@@ -214,7 +192,6 @@ class _LoginPageState extends State<LoginPage> {
                             padding: EdgeInsets.zero,
                             itemBuilder: (BuildContext context, int index) {
 
-                              final Color color = _colors[index];
                               File img= File(users[index].avatarUrl.replaceAll("'", "").replaceAll("File:", "").replaceAll(" ", ""));
 
                               return GestureDetector(
@@ -249,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                                     decoration: BoxDecoration(
 
                                       borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(width: 3,color: Colors.white24),
+                                      border: Border.all(width: 3,color:  isDark?  Colors.white24: Colors.black45),
 
                                     ),
                                     child: Column(
@@ -287,30 +264,7 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                         ),
 
-                                        /*
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            border:Border.all(width:2),
-                                          ),
-                                          child: GestureDetector(
-                                            onLongPress: (){
-                                              setState(() {
-                                                _pickImageFromGallery().then((value) =>
-                                                    updateDocument(  users[index].id, value.toString()));
-                                              });
-                                              },
-                                            child:
-                                          users[index].avatarUrl.replaceAll("'", "") ==null ?
-                                            Image.file(  File(users[index].avatarUrl.replaceAll("'", "")),
-                                              width: width,
-                                              height: width/2,
-                                              fit: BoxFit.fill,):
 
-                                            Icon(Icons.error_outline_rounded,size: 25,)
-
-                                          ),
-
-                                        ),*/
                                         SizedBox(height:width/25),
                                         Text(
                                           users[index].name,
@@ -330,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Padding(
-                          padding:  EdgeInsets.symmetric(vertical: width/50),
+                          padding:  EdgeInsets.only(left: width/50,right: width/50,bottom: width/100),
                           child: GestureDetector(
                               child: Container(
                                 width: width/5,

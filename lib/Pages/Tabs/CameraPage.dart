@@ -22,6 +22,7 @@ class _CameraPageState extends State<CameraPage> {
   late     StreamSubscription<double>? _subscription;
   double _currentVolume = 0.0;
   var visible = false;
+  var  isDark ;
   bool isFlashOn = false;
 
   late File imageFile;
@@ -113,6 +114,7 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     if (cameraController == null || !cameraController!.value.isInitialized) {
@@ -190,7 +192,7 @@ class _CameraPageState extends State<CameraPage> {
           child: SpeedDial(
           animatedIcon:AnimatedIcons.menu_close,
           icon:Icons.arrow_upward,
-          backgroundColor: Colors.white24,
+          backgroundColor: isDark? Colors.white24:Colors.deepPurpleAccent,
 
           buttonSize: width/6,
 
@@ -211,7 +213,7 @@ class _CameraPageState extends State<CameraPage> {
                 child: Icon(
                   isFlashOn ? Icons.flash_on : Icons.flash_off, // Flash durumuna göre farklı bir ikon kullan
                 ),
-                backgroundColor: Colors.white24,
+                backgroundColor: isDark? Colors.white24:Colors.yellowAccent,
                 label: "open flash"
             )
 
@@ -228,7 +230,7 @@ class _CameraPageState extends State<CameraPage> {
                     });
                   }
                   );},
-                backgroundColor: Colors.white24,
+                backgroundColor: isDark? Colors.white24:Colors.yellowAccent,
               child:Icon(Icons.add_circle)
                 ,label: "select photo"
             ),
@@ -242,7 +244,7 @@ class _CameraPageState extends State<CameraPage> {
               child: Icon(Icons.flip_camera_ios_outlined),
                 label: "change camera",
 
-              backgroundColor: Colors.white24,
+              backgroundColor: isDark? Colors.white24:Colors.yellowAccent,
 
             )
           ],
@@ -267,12 +269,12 @@ class _CameraPageState extends State<CameraPage> {
         ),
         height: width / 6,
         width: width / 6,
-        decoration: const BoxDecoration(
+        decoration:  BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white24,
+          color: isDark ? Colors.white24:Colors.deepPurpleAccent,
           boxShadow: [
             BoxShadow(
-              color: Colors.white24,
+              color: isDark ? Colors.white24:Colors.black26,
               offset: Offset(2, 2),
               blurRadius: 10,
             ),

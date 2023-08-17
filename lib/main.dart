@@ -82,120 +82,127 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
     final double width = MediaQuery.of(context).size.shortestSide;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Diasoroath'),
+        title: Text('Diasoroath',style: TextStyle(fontSize: width/15),),
         toolbarHeight: width/5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(3), // İstediğiniz yuvarlaklığı burada ayarlayabilirsiniz
+          ),
+        ),
         backgroundColor:isDark? Colors.white10: Colors.deepPurpleAccent,
       ),
       body: Center(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: width / 6, horizontal: width / 20),
-                child: Text(
-                  'Please enter phone number',
-                  style: TextStyle(fontSize:width/18),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: width / 15, left: width / 15, right: width / 15),
-                child: TextFormField(
-
-                  controller: ageController,
-                  decoration: InputDecoration(
-                    errorStyle: TextStyle(fontSize: width / 22,),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.red),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.red),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.purpleAccent),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.green),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    label: Text(
-                      phoneNumber.isNotEmpty ? "${phoneNumber}" : "Phone number"
-                    ),
-                    hintText: "${phoneNumber}",
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: width / 6, horizontal: width / 20),
+                  child: Text(
+                    'Please enter phone number',
+                    style: TextStyle(fontSize:width/18),
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Phone number cannot be left empty.";
-                    }
-                    if (!value.contains(RegExp(r"[0123456789]"))) {
-                      return "Invalid format for phone number, please enter a valid one.";
-                    }
-                    if (value.contains(RegExp(r"[a-zA-Z]"))) {
-                      return "Invalid format for phone number, please enter a valid one.";
-                    } else if (!value.startsWith("0")) {
-                      return "lütfen numaranın 0 ile başladığına emin olunuz";
-                    }
-                    else if(value.contains(" ")){
-                      return "lütfen numarınızı boşluk olmadan giriniz";
-                    }
-                    else if (value.length != 11) {
-                      return "yanlış veya eksik numara girdiniz";
-                    }
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: width / 15, left: width / 15, right: width / 15),
+                  child: TextFormField(
 
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(
-                height: width/9,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: isDark? Colors.white24: Colors.deepPurpleAccent, // Background color
-                    onPrimary: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
+                    controller: ageController,
+                    decoration: InputDecoration(
+                      errorStyle: TextStyle(fontSize: width / 22,),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.red),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.red),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.black87),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.green),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      label: Text(
+                        phoneNumber.isNotEmpty ? "${phoneNumber}" : "Phone number"
+                      ),
+                      hintText: "${phoneNumber}",
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Phone number cannot be left empty.";
+                      }
+                      if (!value.contains(RegExp(r"[0123456789]"))) {
+                        return "Invalid format for phone number, please enter a valid one.";
+                      }
+                      if (value.contains(RegExp(r"[a-zA-Z]"))) {
+                        return "Invalid format for phone number, please enter a valid one.";
+                      } else if (!value.startsWith("0")) {
+                        return "lütfen numaranın 0 ile başladığına emin olunuz";
+                      }
+                      else if(value.contains(" ")){
+                        return "lütfen numarınızı boşluk olmadan giriniz";
+                      }
+                      else if (value.length != 11) {
+                        return "yanlış veya eksik numara girdiniz";
+                      }
+
+                      return null;
+                    },
                   ),
-                  child: Text('Select Phone', style: TextStyle(fontSize: width / 20)),
-                  onPressed: () async {
-                    await getPhoneNumber();
-                  },
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: width / 15.0),
-                child: SizedBox(
-                  height: width/10,
+                SizedBox(
+                  height: width/9,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: isDark? Colors.white24: Colors.deepPurpleAccent,
+                      primary: isDark? Colors.white24: Colors.deepPurpleAccent, // Background color
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: Text('Send', style: TextStyle(fontSize: width / 20)),
+                    child: Text('Select Phone', style: TextStyle(fontSize: width / 20)),
                     onPressed: () async {
-                      if (ageController.text.isNotEmpty || phoneNumber.isNotEmpty) {
-
-                      if (_formKey.currentState!.validate()) {
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool('isFirstRun', false);
-                        await prefs.setString('phoneNum',
-                            phoneNumber.isEmpty ? Validation.checkPhoneNum(ageController.text) : Validation.checkPhoneNum(phoneNumber));
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
-                      }
-                      }
+                      await getPhoneNumber();
                     },
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.only(top: width / 15.0),
+                  child: SizedBox(
+                    height: width/10,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: isDark? Colors.white24: Colors.deepPurpleAccent,
+                        onPrimary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text('Send', style: TextStyle(fontSize: width / 20)),
+                      onPressed: () async {
+                        if (ageController.text.isNotEmpty || phoneNumber.isNotEmpty) {
+
+                        if (_formKey.currentState!.validate()) {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          await prefs.setBool('isFirstRun', false);
+                          await prefs.setString('phoneNum',
+                              phoneNumber.isEmpty ? Validation.checkPhoneNum(ageController.text) : Validation.checkPhoneNum(phoneNumber));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+                        }
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

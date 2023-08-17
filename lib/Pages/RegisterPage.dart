@@ -93,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
 
                     Padding(
-                      padding: EdgeInsets.only(top:0.0),
+                      padding: EdgeInsets.only(top:0.0, bottom: width/15),
                       child:isDark ?Image.asset(
                         'images/logo1.png',
                         alignment: Alignment.center,
@@ -124,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               BorderSide(width: 2, color: Colors.red),
                               borderRadius: BorderRadius.circular(15.0)),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.purpleAccent),
+                            borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.black87),
                             borderRadius: BorderRadius.circular(15.0),),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -162,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               BorderSide(width: 2, color: Colors.red),
                               borderRadius: BorderRadius.circular(15.0)),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.purpleAccent),
+                            borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.black87),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -202,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                               ),
                                 child: Checkbox(
-                                activeColor: Colors.white,checkColor: Colors.black,
+                                activeColor: isDark? Colors.white:Colors.black54,checkColor: isDark? Colors.black87:Colors.white ,
 
                              shape:  RoundedRectangleBorder(
                                      borderRadius: BorderRadius.circular(25), //
@@ -256,7 +256,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 child: RadioListTile<int>(
 
-                                  activeColor: Colors.white,
+                                  activeColor: isDark? Colors.white:Colors.black87,
                                   title: Row(
                                     children: [
                                       Text(
@@ -286,7 +286,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Transform.scale(
                                 scale: 1.2,
                                 child: RadioListTile<int>(
-                                  activeColor: Colors.white,
+                                  activeColor: isDark? Colors.white:Colors.black87,
                                   title: Row(
                                     children: [
                                       Text(
@@ -315,7 +315,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Transform.scale(
                                 scale: 1.2,
                                 child: RadioListTile<int>(
-                                  activeColor: Colors.white,
+                                  activeColor: isDark? Colors.white:Colors.black87,
                                   title: Row(
                                     children: [
                                       Text(
