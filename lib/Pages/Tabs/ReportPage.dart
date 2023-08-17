@@ -23,14 +23,14 @@ class _ReportPageState extends State<ReportPage> {
   List<int> selectedItems =[];
   late List<Report> selectedReport ;
 
-
+//  reportları getirmek için gerekli konfigrasyonları yapar
   Future<String> get() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? val = await prefs.getString('phoneNum');
     return val!;
   }
 
-  Future<List<Report>> getEntity() async {
+  Future<List<Report>> getReport() async {
     String phone = await get();
     CollectionReference userCollectionRef =
     FirebaseFirestore.instance.collection(phone);
@@ -55,6 +55,8 @@ class _ReportPageState extends State<ReportPage> {
     return reports;
   }
 
+
+  // reportları siler
   Future<void> deleteEntity(String reportId) async {
     String phone = await get();
     CollectionReference userCollectionRef =
@@ -70,6 +72,8 @@ class _ReportPageState extends State<ReportPage> {
       print('Silme işlemi başarısız oldu: $error');
     });
   }
+
+  // toplu report siler
   Future<void> deleteEntities(List<Report> reportIds) async {
     String phone = await get();
     CollectionReference userCollectionRef = FirebaseFirestore.instance.collection(phone);
@@ -83,6 +87,7 @@ class _ReportPageState extends State<ReportPage> {
 
       try {
         await reportDocRef.delete();
+        selectedItems.clear();
         print('Veri silindi: $reportId');
       } catch (error) {
         print('Silme işlemi başarısız oldu: $error');
@@ -319,7 +324,7 @@ class _ReportPageState extends State<ReportPage> {
                 : Center(child: Text("You do not have any report"));
           }
         },
-        future: getEntity(),
+        future: getReport(),
       ),
       floatingActionButton: selectedItems.isNotEmpty ?FloatingActionButton(
         onPressed: () async{
