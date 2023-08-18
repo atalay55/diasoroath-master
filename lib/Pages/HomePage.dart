@@ -1,13 +1,6 @@
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:gokhan/Pages/Tabs/HelpPage.dart';
-import 'package:gokhan/Pages/Tabs/ReportPage.dart';
-import 'package:gokhan/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../Entity/User.dart';
+import 'package:Diasoroath/Pages/Tabs/HelpPage.dart';
+import 'package:Diasoroath/Pages/Tabs/ReportPage.dart';
 import 'Tabs/CameraPage.dart';
 
 class HomePage extends StatefulWidget {

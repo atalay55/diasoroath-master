@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gokhan/Entity/Report.dart';
-import 'package:gokhan/Pages/LoginPage.dart';
+import 'package:Diasoroath/Entity/Report.dart';
+import 'package:Diasoroath/Pages/LoginPage.dart';
 
 class ReportPageDetail extends StatefulWidget {
   Report report;

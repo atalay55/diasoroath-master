@@ -4,10 +4,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gokhan/Pages/HomePage.dart';
-import 'package:gokhan/Pages/LoginPage.dart';
-import 'package:gokhan/Pages/RegisterPage.dart';
-import 'package:gokhan/Pages/Tabs/ReportPage.dart';
+import 'package:Diasoroath/Pages/HomePage.dart';
+import 'package:Diasoroath/Pages/LoginPage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

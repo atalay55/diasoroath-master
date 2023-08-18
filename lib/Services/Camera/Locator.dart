@@ -1,4 +1,4 @@
-import 'package:gokhan/Services/Camera/camera.dart';
+import 'package:Diasoroath/Services/Camera/camera.dart';
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;

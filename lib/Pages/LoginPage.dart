@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gokhan/Pages/HomePage.dart';
-import 'package:gokhan/Pages/RegisterPage.dart';
+import 'package:Diasoroath/Pages/HomePage.dart';
+import 'package:Diasoroath/Pages/RegisterPage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Entity/User.dart';
@@ -206,7 +206,10 @@ class _LoginPageState extends State<LoginPage> {
                                       return AlertDialog(
                                           title: Text('Do you want to delete the user?'),
                                           content:Form(
-                                            child:ElevatedButton(child:Text("Delete"),onPressed: (){
+                                            child:ElevatedButton(
+                                               style: ButtonStyle(
+                                              backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                                            ),child:Text("Delete" ),onPressed: (){
                                               setState(() {
                                                 deleteUser(users[index]);
                                                 Navigator.pop(context);
