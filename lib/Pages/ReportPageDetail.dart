@@ -83,6 +83,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontStyle: FontStyle.normal,
+                        color: isDark? Colors.white70: Colors.black,
                       ),
                     ),
                   ],
@@ -115,6 +116,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontStyle: FontStyle.normal,
+                        color: isDark? Colors.white70: Colors.black,
                       ),
                     ),
                   ],
@@ -147,6 +149,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontStyle: FontStyle.normal,
+                        color: isDark? Colors.white70: Colors.black,
                       ),
                     ),
                   ],
@@ -180,6 +183,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                         color: Colors.redAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
+
                       ),
                     ),
                   ],

@@ -35,10 +35,11 @@ class _ReportPageState extends State<ReportPage> {
     CollectionReference userCollectionRef =
     FirebaseFirestore.instance.collection(phone);
     DocumentReference userDocRef = userCollectionRef.doc(LoginPage.user!.name);
-    CollectionReference reportsCollectionRef =
-    userDocRef.collection('Reports');
+    CollectionReference reportsCollectionRef = userDocRef.collection('Reports');
 
-    QuerySnapshot querySnapshot = await reportsCollectionRef.get();
+    QuerySnapshot querySnapshot = await reportsCollectionRef
+        .orderBy("timestamp", descending: true) // Oluşturma tarihine göre sıralama
+        .get();
 
     List<Report> reports = [];
 
@@ -49,11 +50,17 @@ class _ReportPageState extends State<ReportPage> {
           reportDetail: doc["reportDetail"],
           ImagePath: doc["ImagePath"],
           userId: doc["userId"],
+          timestamp: doc['timestamp'].toDate(),
         ),
       );
     });
+
+    print(reports);
     return reports;
   }
+
+
+
 
 
   // reportları siler
@@ -153,6 +160,7 @@ class _ReportPageState extends State<ReportPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Veriler alınamadı'),
+                  Text('Veriler alınamadı'),
                 ],
               ),
             );
@@ -163,7 +171,7 @@ class _ReportPageState extends State<ReportPage> {
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
                 File file = File(
-                    snapshot.data![index].ImagePath.replaceAll("'", ""));
+                    snapshot.data![index].ImagePath.replaceAll("'", "").replaceAll("'", ""));
 
                 return GestureDetector(
                   onLongPress: (){
@@ -234,6 +242,9 @@ class _ReportPageState extends State<ReportPage> {
                       } else if (direction == DismissDirection.endToStart) {
 
                         await shareReportPdf(snapshot.data![index]);
+                        setState(() {
+
+                        });
                       }
                     },
                     child: GestureDetector(
@@ -284,7 +295,6 @@ class _ReportPageState extends State<ReportPage> {
                          color:  selectedItems.contains(index) ? Colors.white24 : null,
                             // Add more styling properties if needed
                           ),
-
                           height: 100,
                           width: width,
                           child: Padding(

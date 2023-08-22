@@ -3,7 +3,9 @@ class Report{
   late String userId;
   late String ImagePath;
   late String reportDetail;
+  late DateTime? timestamp;
 
-  Report({required this.id,required this.userId,required this.ImagePath ,required this.reportDetail});
+  Report({required this.id,  this.timestamp,required this.userId,required this.ImagePath ,required this.reportDetail});
+
 
 }

@@ -39,6 +39,7 @@ class PhotoSend extends StatelessWidget {
        'userId': userId,
        'ImagePath': ImagePath,
        'reportDetail': reportDetail,
+       'timestamp': FieldValue.serverTimestamp(),
      }).then(( _) {
        reportId = reportsCollectionRef.id;
        print('Rapor eklendi: ${reportsCollectionRef.id}');
