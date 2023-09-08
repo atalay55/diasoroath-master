@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Diasoroath/Services/Utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:Diasoroath/Pages/HomePage.dart';
 import 'package:Diasoroath/Pages/LoginPage.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Services/API/SendPhotoToAPI.dart';
 
@@ -15,38 +12,9 @@ import '../Services/API/SendPhotoToAPI.dart';
 class PhotoSend extends StatelessWidget {
    final File imageFile;
    PhotoSend({required this.imageFile });
+
    late String reportId =" ";
 
-
-   Future<String> get() async{
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-     String? val =  await prefs.getString('phoneNum');
-     return val!;
-   }
-
-
-  // CollectionReference userCollectionRef = FirebaseFirestore.instance.collection("User");
-
-   Future<void> addReport(String userId, String reportDetail, String ImagePath) async {
-     String phone =await get();
-     CollectionReference userCollectionRef = FirebaseFirestore.instance.collection(phone);
-     DocumentReference userDocRef = userCollectionRef.doc(userId);
-
-     DocumentReference reportsCollectionRef = userDocRef.collection('Reports').doc();
-
-     await reportsCollectionRef.set({
-       'id': reportsCollectionRef.id,
-       'userId': userId,
-       'ImagePath': ImagePath,
-       'reportDetail': reportDetail,
-       'timestamp': FieldValue.serverTimestamp(),
-     }).then(( _) {
-       reportId = reportsCollectionRef.id;
-       print('Rapor eklendi: ${reportsCollectionRef.id}');
-     }).catchError((error) {
-       print('Rapor ekleme işlemi başarısız oldu: $error');
-     });
-   }
 
 
    @override
@@ -125,7 +93,7 @@ class PhotoSend extends StatelessWidget {
                                          context: context,
                                          builder: (BuildContext context) {
 
-                                           addReport(LoginPage.user!.id,"", this.imageFile.toString().replaceFirst("File: ", "")).then((value) {
+                                          ReportUtilities().addReport(LoginPage.user!.id,"", this.imageFile.toString().replaceFirst("File: ", ""),reportId).then((value) {
 
                                              SendPhotoToAPI(imageFile,LoginPage.user!.name,reportId);
                                            });

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:Diasoroath/Services/Utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:Diasoroath/Entity/Report.dart';
 import 'package:Diasoroath/Pages/LoginPage.dart';
@@ -14,15 +15,15 @@ class ReportPageDetail extends StatefulWidget {
 class _ReportPageDetailState extends State<ReportPageDetail> {
   @override
   Widget build(BuildContext context) {
-    final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
-    var width = MediaQuery.of(context).size.width;
+
+
     File file = File(widget.report.ImagePath.replaceAll("'", ""));
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Diasoroath'),
-        toolbarHeight: width/5,
-        backgroundColor:isDark? Colors.white10: Colors.deepPurpleAccent,
+        toolbarHeight: (Utilities().width)/5,
+        backgroundColor:Utilities().isPlatformDarkMode? Colors.white10: Colors.deepPurpleAccent,
       ),
       body: widget.report.userId == LoginPage.user!.id
           ? Container(
@@ -49,8 +50,8 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                 child: file != null
                     ? Image.file(
                   file,
-                  width: width,
-                  height: width / 1.5,
+                  width: (Utilities().width),
+                  height: (Utilities().width) / 1.5,
                   fit: BoxFit.cover,
                 )
                     : Center(child: CircularProgressIndicator()),
@@ -73,7 +74,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                     TextSpan(
                       text: 'Age: ',
                       style: TextStyle(
-                        color: isDark? Colors.white70: Colors.deepPurpleAccent,
+                        color: Utilities().isPlatformDarkMode? Colors.white70: Colors.deepPurpleAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),
@@ -83,7 +84,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontStyle: FontStyle.normal,
-                        color: isDark? Colors.white70: Colors.black,
+                        color: Utilities().isPlatformDarkMode? Colors.white70: Colors.black,
                       ),
                     ),
                   ],
@@ -106,7 +107,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                     TextSpan(
                       text: 'Smoke: ',
                       style: TextStyle(
-                        color: isDark? Colors.white70: Colors.deepPurpleAccent,
+                        color: Utilities().isPlatformDarkMode? Colors.white70: Colors.deepPurpleAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),
@@ -116,7 +117,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontStyle: FontStyle.normal,
-                        color: isDark? Colors.white70: Colors.black,
+                        color: Utilities().isPlatformDarkMode? Colors.white70: Colors.black,
                       ),
                     ),
                   ],
@@ -139,7 +140,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                     TextSpan(
                       text: 'Gender: ',
                       style: TextStyle(
-                        color: isDark? Colors.white70: Colors.deepPurpleAccent,
+                        color: Utilities().isPlatformDarkMode? Colors.white70: Colors.deepPurpleAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),
@@ -149,7 +150,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontStyle: FontStyle.normal,
-                        color: isDark? Colors.white70: Colors.black,
+                        color: Utilities().isPlatformDarkMode? Colors.white70: Colors.black,
                       ),
                     ),
                   ],
@@ -172,7 +173,7 @@ class _ReportPageDetailState extends State<ReportPageDetail> {
                     TextSpan(
                       text: 'Do you have any sick: ',
                       style: TextStyle(
-                        color: isDark? Colors.white70: Colors.deepPurpleAccent,
+                        color: Utilities().isPlatformDarkMode? Colors.white70: Colors.deepPurpleAccent,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),

@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Diasoroath/Services/Utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:Diasoroath/Pages/HomePage.dart';
 import 'package:Diasoroath/Pages/RegisterPage.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Entity/User.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,68 +18,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   var nameCont= TextEditingController();
   var imageCont= TextEditingController();
-  late List<User> users = [];
   late  File? imageFile= null;
-
-
-  Future<String> get() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? val =  await prefs.getString('phoneNum');
-    return val!;
-  }
-
-  Future<List<User>> getUsers() async {
-     users.clear();
-    String phone =await get();
-    CollectionReference userCollectionRef = FirebaseFirestore.instance.collection(phone);
-    QuerySnapshot userQuerySnapshot = await userCollectionRef.get();
-    userQuerySnapshot.docs.forEach((document) {
-      Map<String, dynamic> userData = document.data() as Map<String, dynamic>;
-      User user = User(
-        id: userData["id"],
-        name: userData["name"],
-        age: userData["age"],
-        gender: userData["gender"],
-        avatarUrl: userData["avatarUrl"],
-        smoke: userData["smoke"],
-      );
-    users.add(user);
-    });
-
-    return  this.users;
-  }
-
-
-  Future<void> updateDocument(String userId, String updatedValue) async {
-     String phoneNum = await get();
-
-    CollectionReference collectionRef = FirebaseFirestore.instance.collection(phoneNum);
-    DocumentReference documentRef = collectionRef.doc(userId);
-    await documentRef.update({
-      'avatarUrl': updatedValue.replaceAll("File:", ""),
-    }).then((_) {
-      print("Belge güncellendi: ${documentRef.id}");
-    }).catchError((error) {
-      print("Belge güncelleme işlemi başarısız oldu: $error");
-    });
-  }
-
-
-  Future<void>  deleteUser(User user) async {
-    String phone =await get();
-    CollectionReference userCollectionRef = FirebaseFirestore.instance.collection(phone);
-    DocumentReference documentReference = userCollectionRef.doc(user.id);
-
-    await documentReference.delete().then((value) {
-      print('Veri silindi.');
-    }).catchError((error) {
-      print('Silme işlemi başarısız oldu: $error');
-    });
-
-
-  }
-
-
   Future<File> _pickImageFromGallery() async {
     final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
@@ -91,23 +30,22 @@ class _LoginPageState extends State<LoginPage> {
     return imageFile!;
   }
 
-
   @override
   Widget build(BuildContext context) {
-    final isDark= MediaQuery.of(context).platformBrightness == Brightness.dark;
-    var width = MediaQuery.of(context).size.shortestSide;
+
+
     return  Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding:  EdgeInsets.only(top: width/12),
-            child: isDark ?Image.asset(
+            padding:  EdgeInsets.only(top: Utilities().width/12),
+            child: Utilities().isPlatformDarkMode ?Image.asset(
               'images/logo1.png',
               alignment: Alignment.center,
               scale: 1,
-              height: width/1.6,
+              height: Utilities().width/1.6,
             ):Image.asset(
               'images/Logo.png',
               alignment: Alignment.center,
@@ -116,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Flexible(
             child: FutureBuilder<List<User>>(
-                future: getUsers(),
+                future: UserUtilities().getUsers(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -138,8 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                   else if (snapshot.data == null) {
                     return   GestureDetector(
                         child: Container(
-                          width: width/5,
-                          height: width/5,
+                          width: Utilities().width/5,
+                          height: Utilities().width/5,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
@@ -157,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add),
-                              SizedBox(height: width/50),
+                              SizedBox(height: Utilities().width/50),
                               Text(
                                 "Add user",
                                 style: TextStyle(
@@ -176,7 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                     );
                   }
                   else {
-                    users = snapshot.data!;
 
                     return  Column(
                       children: [
@@ -192,11 +129,11 @@ class _LoginPageState extends State<LoginPage> {
                             padding: EdgeInsets.zero,
                             itemBuilder: (BuildContext context, int index) {
 
-                              File img= File(users[index].avatarUrl.replaceAll("'", "").replaceAll("File:", "").replaceAll(" ", ""));
+                              File img= File(snapshot.data![index].avatarUrl.replaceAll("'", "").replaceAll("File:", "").replaceAll(" ", ""));
 
                               return GestureDetector(
                                 onTap: (){
-                                  LoginPage.user=users[index];
+                                  LoginPage.user=snapshot.data![index];
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
                                 },
                                 onLongPress: (){
@@ -211,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                                               backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                                             ),child:Text("Delete" ),onPressed: (){
                                               setState(() {
-                                                deleteUser(users[index]);
+                                                UserUtilities().deleteUser(snapshot.data![index]);
                                                 Navigator.pop(context);
                                               });
 
@@ -229,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                                     decoration: BoxDecoration(
 
                                       borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(width: 3,color:  isDark?  Colors.white24: Colors.black45),
+                                      border: Border.all(width: 3,color:  Utilities().isPlatformDarkMode?  Colors.white24: Colors.black45),
 
                                     ),
                                     child: Column(
@@ -239,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                                           onLongPress: () async{
                                             await _pickImageFromGallery().then((value) {
                                                 setState(() {
-                                                  updateDocument(  users[index].id, value.toString());});
+                                                  UserUtilities(). updateUser(  snapshot.data![index].id, value.toString());});
                                                 });
 
                                           },
@@ -253,14 +190,14 @@ class _LoginPageState extends State<LoginPage> {
                                               child: img.toString() == "File: ''"
                                                   ? Image.asset(
                                                 "images/img_${index > 8 ? index % 8 : index % 3}.png",
-                                                width: width / 3.5,
-                                                height: width / 3.5,
+                                                width: Utilities().width / 3.5,
+                                                height: Utilities().width / 3.5,
                                                 fit: BoxFit.fill,
                                               )
                                                   : Image.file(
                                                 img,
-                                                width: width / 3.5,
-                                                height: width / 3.5,
+                                                width: Utilities().width / 3.5,
+                                                height: Utilities().width / 3.5,
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
@@ -268,12 +205,12 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
 
 
-                                        SizedBox(height:width/25),
+                                        SizedBox(height:Utilities().width/25),
                                         Text(
-                                          users[index].name,
+                                          snapshot.data![index].name,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: width/25,
+                                            fontSize: Utilities().width/25,
                                           ),
                                         ),
 
@@ -287,14 +224,14 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Padding(
-                          padding:  EdgeInsets.only(left: width/50,right: width/50,bottom: width/100),
+                          padding:  EdgeInsets.only(left: Utilities().width/50,right: Utilities().width/50,bottom: Utilities().width/100),
                           child: GestureDetector(
                               child: Container(
-                                width: width/5,
-                                height: width/5,
+                                width: Utilities().width/5,
+                                height: Utilities().width/5,
 
                                 decoration: BoxDecoration(
-                                  color:isDark? null: Colors.deepPurpleAccent,
+                                  color:Utilities().isPlatformDarkMode? null: Colors.deepPurpleAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(width: 2 ,color: Colors.white24),
 
@@ -310,7 +247,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               onTap: (){
                                 setState(() {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterPage()));
+                                  Get.to(RegisterPage());
                                 });
                               }
                           ),

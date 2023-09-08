@@ -1,3 +1,4 @@
+import 'package:Diasoroath/Services/Utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:Diasoroath/Pages/Tabs/HelpPage.dart';
 import 'package:Diasoroath/Pages/Tabs/ReportPage.dart';
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
+
    return MaterialApp(
      debugShowCheckedModeBanner: false,
      title: 'Diasoroath',
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             title: const Text('Diasoroath'),
-            backgroundColor:isDark? Colors.white10: Colors.deepPurpleAccent,
+            backgroundColor:Utilities().isPlatformDarkMode? Colors.white10: Colors.deepPurpleAccent,
           ),
           body:  SafeArea(
             child: TabBarView(

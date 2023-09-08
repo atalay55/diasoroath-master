@@ -1,3 +1,4 @@
+import 'package:Diasoroath/Services/Utilities.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:Diasoroath/Pages/LoginPage.dart';
@@ -78,18 +79,17 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = MediaQuery.of(context).platformBrightness==Brightness.dark;
-    final double width = MediaQuery.of(context).size.shortestSide;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Diasoroath',style: TextStyle(fontSize: width/15),),
-        toolbarHeight: width/5,
+        title: Text('Diasoroath',style: TextStyle(fontSize:Utilities().width/15),),
+        toolbarHeight:Utilities().width/5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(3), // İstediğiniz yuvarlaklığı burada ayarlayabilirsiniz
           ),
         ),
-        backgroundColor:isDark? Colors.white10: Colors.deepPurpleAccent,
+        backgroundColor:Utilities().isPlatformDarkMode? Colors.white10: Colors.deepPurpleAccent,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -100,19 +100,19 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: width / 6, horizontal: width / 20),
+                  padding: EdgeInsets.symmetric(vertical: Utilities().width / 6, horizontal: Utilities().width / 20),
                   child: Text(
                     'Please enter phone number',
-                    style: TextStyle(fontSize:width/18),
+                    style: TextStyle(fontSize:Utilities().width/18),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: width / 15, left: width / 15, right: width / 15),
+                  padding: EdgeInsets.only(bottom: Utilities().width / 15, left: Utilities().width / 15, right: Utilities().width / 15),
                   child: TextFormField(
 
                     controller: ageController,
                     decoration: InputDecoration(
-                      errorStyle: TextStyle(fontSize: width / 22,),
+                      errorStyle: TextStyle(fontSize: Utilities().width / 22,),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 2, color: Colors.red),
                         borderRadius: BorderRadius.circular(15.0),
@@ -122,7 +122,7 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 2, color: isDark? Colors.white:Colors.black87),
+                        borderSide: BorderSide(width: 2, color: Utilities().isPlatformDarkMode? Colors.white:Colors.black87),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -158,34 +158,34 @@ class _MyFirstRunPageState extends State<MyFirstRunPage> {
                   ),
                 ),
                 SizedBox(
-                  height: width/9,
+                  height: Utilities().width/9,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: isDark? Colors.white24: Colors.deepPurpleAccent, // Background color
+                      primary: Utilities().isPlatformDarkMode? Colors.white24: Colors.deepPurpleAccent, // Background color
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: Text('Select Phone', style: TextStyle(fontSize: width / 20)),
+                    child: Text('Select Phone', style: TextStyle(fontSize: Utilities().width / 20)),
                     onPressed: () async {
                       await getPhoneNumber();
                     },
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: width / 15.0),
+                  padding: EdgeInsets.only(top: Utilities().width / 15.0),
                   child: SizedBox(
-                    height: width/10,
+                    height: Utilities().width/10,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: isDark? Colors.white24: Colors.deepPurpleAccent,
+                        primary: Utilities().isPlatformDarkMode? Colors.white24: Colors.deepPurpleAccent,
                         onPrimary: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      child: Text('Send', style: TextStyle(fontSize: width / 20)),
+                      child: Text('Send', style: TextStyle(fontSize: Utilities().width / 20)),
                       onPressed: () async {
                         if (ageController.text.isNotEmpty || phoneNumber.isNotEmpty) {
 
