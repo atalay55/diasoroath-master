@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:io';
 import 'package:Diasoroath/Services/Utilities.dart';
@@ -6,10 +5,11 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:Diasoroath/Pages/PhotoSend.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image/image.dart' as img;
+
+
 
 class CameraPage extends StatefulWidget {
   @override
@@ -19,15 +19,14 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   late List<CameraDescription> cameras;
   CameraController? cameraController;
-  late StreamSubscription<double>? _subscription;
+  late     StreamSubscription<double>? _subscription;
   var visible = false;
   bool isFlashOn = false;
 
   late File imageFile;
 
   Future<File> _pickImageFromGallery() async {
-    final pickedImage =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+    final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
       if (pickedImage != null) {
         imageFile = File(pickedImage.path);
@@ -36,9 +35,9 @@ class _CameraPageState extends State<CameraPage> {
     return imageFile;
   }
 
+
   Future<void> rotateAndSaveImage(String imagePath) async {
-    final img.Image? image =
-        img.decodeImage(await File(imagePath).readAsBytes());
+    final img.Image? image = img.decodeImage(await File(imagePath).readAsBytes());
     if (image != null) {
       final String rotatedImagePath = imagePath; // Overwrite the original image
       await GallerySaver.saveImage(rotatedImagePath);
@@ -74,6 +73,7 @@ class _CameraPageState extends State<CameraPage> {
   void dispose() {
     cameraController?.dispose();
     super.dispose();
+
   }
 
   @override
@@ -91,8 +91,11 @@ class _CameraPageState extends State<CameraPage> {
         final String imagePath = image.path;
         await rotateAndSaveImage(imagePath);
         setState(() {
-          Get.to(
-            PhotoSend(imageFile: File(imagePath)),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PhotoSend(imageFile: File(imagePath)),
+            ),
           );
         });
       } catch (e) {
@@ -103,13 +106,14 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+
     if (cameraController == null || !cameraController!.value.isInitialized) {
       return Center(child: CircularProgressIndicator());
     }
     if (cameraController!.value.isInitialized) {
       return Scaffold(
         body: GestureDetector(
-          onDoubleTap: () {
+          onDoubleTap: (){
             setState(() {
               direction = direction == 0 ? 1 : 0;
               startCamera(direction);
@@ -126,19 +130,20 @@ class _CameraPageState extends State<CameraPage> {
               ),
               visible
                   ? Center(
-                      child: Image.asset(
-                        'images/mt2.png',
-                        width: Utilities().width / 3,
-                        height: Utilities().height / 3,
-                      ),
-                    )
+                child: Image.asset(
+                  'images/mt2.png',
+                  width: Utilities().width / 3,
+                  height: Utilities().height / 3,
+                ),
+              )
                   : SizedBox(),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: Utilities().width / 20),
+                    padding:  EdgeInsets.only(left:Utilities().width/20),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -149,97 +154,95 @@ class _CameraPageState extends State<CameraPage> {
                               visible = !visible;
                             });
                           },
-                          child: button(Icons.add_photo_alternate_outlined,
-                              Utilities().width),
+                          child: button(Icons.add_photo_alternate_outlined,  Utilities().width),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(left: Utilities().width / 15),
+                          padding:  EdgeInsets.only(left: Utilities().width/15),
                           child: GestureDetector(
-                            onLongPress: () {},
+                            onLongPress: (){
+
+                            },
                             onTap: capturePhoto,
-                            child: button(
-                                Icons.camera_alt_outlined, Utilities().width),
+                            child: button(Icons.camera_alt_outlined,   Utilities().width),
                           ),
                         ),
+
+
                       ],
                     ),
                   )
                 ],
               ),
+
+
             ],
           ),
-        ),
-        floatingActionButton: Padding(
-          padding: EdgeInsets.only(
-              right: Utilities().width / 20.0, bottom: Utilities().width / 55),
+        ),floatingActionButton: Padding(
+          padding:  EdgeInsets.only(right: Utilities().width/20.0,bottom: Utilities().width/55),
           child: SpeedDial(
-            animatedIcon: AnimatedIcons.menu_close,
-            icon: Icons.arrow_upward,
-            backgroundColor: Utilities().isPlatformDarkMode
-                ? Colors.white24
-                : Colors.deepPurpleAccent,
+          animatedIcon:AnimatedIcons.menu_close,
+          icon:Icons.arrow_upward,
+          backgroundColor: Utilities().isPlatformDarkMode? Colors.white24:Colors.deepPurpleAccent,
 
-            buttonSize: Utilities().width / 6,
+          buttonSize: Utilities().width/6,
 
-            //animatedIcon: AnimatedIcons.menu_close,
-            children: [
-              SpeedDialChild(
-                  onTap: () {
-                    setState(() {
-                      isFlashOn = !isFlashOn; // Flash durumunu tersine çevir
-
-                      if (isFlashOn) {
-                        cameraController!
-                            .setFlashMode(FlashMode.torch); // Flash'ı aç
-                      } else {
-                        cameraController!
-                            .setFlashMode(FlashMode.off); // Flash'ı kapat
-                      }
-                    });
-                  },
-                  child: Icon(
-                    isFlashOn
-                        ? Icons.flash_on
-                        : Icons
-                            .flash_off, // Flash durumuna göre farklı bir ikon kullan
-                  ),
-                  backgroundColor: Utilities().isPlatformDarkMode
-                      ? Colors.white24
-                      : Colors.yellowAccent,
-                  label: "open flash"),
-              SpeedDialChild(
-                  onTap: () {
-                    _pickImageFromGallery().then((value) {
-                      setState(() {
-                        Get.to(
-                          PhotoSend(imageFile: value),
-                        );
-                      });
-                    });
-                  },
-                  backgroundColor: Utilities().isPlatformDarkMode
-                      ? Colors.white24
-                      : Colors.yellowAccent,
-                  child: Icon(Icons.add_circle),
-                  label: "select photo"),
-              SpeedDialChild(
+          //animatedIcon: AnimatedIcons.menu_close,
+          children: [
+            SpeedDialChild(
                 onTap: () {
                   setState(() {
-                    direction = direction == 0 ? 1 : 0;
-                    startCamera(direction);
+                    isFlashOn = !isFlashOn; // Flash durumunu tersine çevir
+
+                    if (isFlashOn) {
+                      cameraController!.setFlashMode(FlashMode.torch); // Flash'ı aç
+                    } else {
+                      cameraController!.setFlashMode(FlashMode.off); // Flash'ı kapat
+                    }
                   });
                 },
-                child: Icon(Icons.flip_camera_ios_outlined),
+                child: Icon(
+                  isFlashOn ? Icons.flash_on : Icons.flash_off, // Flash durumuna göre farklı bir ikon kullan
+                ),
+                backgroundColor: Utilities().isPlatformDarkMode? Colors.white24:Colors.yellowAccent,
+                label: "open flash"
+            )
+
+
+            , SpeedDialChild(
+                onTap: (){
+                  _pickImageFromGallery().then((value) {
+                    setState(() {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>
+                            PhotoSend(imageFile: value)),
+                      );
+                    });
+                  }
+                  );},
+                backgroundColor: Utilities().isPlatformDarkMode? Colors.white24:Colors.yellowAccent,
+              child:Icon(Icons.add_circle)
+                ,label: "select photo"
+            ),
+            SpeedDialChild(
+              onTap: () {
+                setState(() {
+                  direction = direction == 0 ? 1 : 0;
+                  startCamera(direction);
+                });
+              },
+              child: Icon(Icons.flip_camera_ios_outlined),
                 label: "change camera",
-                backgroundColor: Utilities().isPlatformDarkMode
-                    ? Colors.white24
-                    : Colors.yellowAccent,
-              )
-            ],
-          ),
+
+              backgroundColor: Utilities().isPlatformDarkMode? Colors.white24:Colors.yellowAccent,
+
+            )
+          ],
+      ),
         ),
-      );
+
+
+);
     } else {
       return const SizedBox();
     }
@@ -247,6 +250,7 @@ class _CameraPageState extends State<CameraPage> {
 
   Widget button(IconData icon, var width) {
     return Align(
+
       child: Container(
         margin: const EdgeInsets.only(
           left: 20,
@@ -255,16 +259,12 @@ class _CameraPageState extends State<CameraPage> {
         ),
         height: Utilities().width / 6,
         width: width / 6,
-        decoration: BoxDecoration(
+        decoration:  BoxDecoration(
           shape: BoxShape.circle,
-          color: Utilities().isPlatformDarkMode
-              ? Colors.white24
-              : Colors.deepPurpleAccent,
+          color: Utilities().isPlatformDarkMode ? Colors.white24:Colors.deepPurpleAccent,
           boxShadow: [
             BoxShadow(
-              color: Utilities().isPlatformDarkMode
-                  ? Colors.white24
-                  : Colors.black26,
+              color: Utilities().isPlatformDarkMode ? Colors.white24:Colors.black26,
               offset: Offset(2, 2),
               blurRadius: 10,
             ),
